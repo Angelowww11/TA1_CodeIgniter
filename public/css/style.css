@@ -97,6 +97,9 @@ th { color: var(--muted); background: #f2f4f1; font-size: 0.76rem; letter-spacin
 tr:last-child td { border-bottom: 0; }
 
 .role { display: inline-block; padding: 4px 9px; border-radius: 999px; color: var(--accent-dark); background: #dcebea; font-size: 0.85rem; font-weight: 700; }
+.status { display: inline-block; padding: 4px 9px; border-radius: 999px; font-size: 0.85rem; font-weight: 700; }
+.status.active { color: #185a32; background: #dff3e6; }
+.status.inactive { color: #7a2630; background: #f7dfe2; }
 .site-footer { padding: 22px 0; color: var(--muted); font-size: 0.88rem; }
 
 @media (max-width: 720px) {
