@@ -3,7 +3,7 @@
 <section class="page-heading">
     <p class="eyebrow">About</p>
     <h1>How this beginner project works</h1>
-    <p>SimplePOS is a four-page CodeIgniter application built to practice the MVC request flow before adding a database.</p>
+    <p>SimplePOS is a four-page CodeIgniter application that uses Models and Query Builder to retrieve account records from MySQL.</p>
 </section>
 
 <section class="steps">
@@ -14,13 +14,13 @@
     </article>
     <article class="card">
         <span class="card-number">2</span>
-        <h2>Controller</h2>
-        <p>The controller prepares the page title and its temporary array of records.</p>
+        <h2>Model and Controller</h2>
+        <p>The Model represents a database table, while the controller retrieves its records and prepares the page data.</p>
     </article>
     <article class="card">
         <span class="card-number">3</span>
         <h2>View</h2>
-        <p>The view receives the data and turns it into the HTML shown in the browser.</p>
+        <p>The view receives the database records and turns them into escaped HTML table rows.</p>
     </article>
 </section>
 

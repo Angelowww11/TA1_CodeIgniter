@@ -2,17 +2,19 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class Users extends BaseController
 {
     public function index(): string
     {
-        $users = [
-            ['username' => 'admin01', 'full_name' => 'Maria Lopez', 'role' => 'Administrator'],
-            ['username' => 'cashier01', 'full_name' => 'John Mendoza', 'role' => 'Cashier'],
-            ['username' => 'cashier02', 'full_name' => 'Lea Flores', 'role' => 'Cashier'],
-            ['username' => 'stock01', 'full_name' => 'Paolo Rivera', 'role' => 'Inventory Clerk'],
-            ['username' => 'manager01', 'full_name' => 'Nina Bautista', 'role' => 'Store Manager'],
-        ];
+        $userModel = new UserModel();
+        $users = $userModel
+            ->select('username')
+            ->select("CONCAT(first_name, ' ', last_name) AS full_name", false)
+            ->select('role, account_status')
+            ->orderBy('user_id', 'ASC')
+            ->findAll();
 
         return view('users/index', [
             'title' => 'User Accounts',

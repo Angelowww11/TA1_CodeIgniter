@@ -3,7 +3,7 @@
 <section class="hero">
     <p class="eyebrow">CodeIgniter POS Foundations</p>
     <h1>A simple starting point for a point-of-sale system</h1>
-    <p>This beginner project demonstrates routes, controllers, views, and temporary data using static PHP arrays.</p>
+    <p>This project demonstrates routes, controllers, models, views, and persistent account records stored in MySQL.</p>
     <div class="actions">
         <a class="button" href="<?= site_url('customers') ?>">View customers</a>
         <a class="button secondary" href="<?= site_url('users') ?>">View users</a>

@@ -3,7 +3,7 @@
 <section class="page-heading">
     <p class="eyebrow">Records</p>
     <h1>Customer Accounts</h1>
-    <p><?= count($customers) ?> sample customers loaded from a static PHP array.</p>
+    <p><?= count($customers) ?> customer accounts loaded from the MySQL database.</p>
 </section>
 
 <div class="table-wrap">
@@ -13,6 +13,7 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
                     <td><?= esc($customer['full_name']) ?></td>
                     <td><?= esc($customer['email']) ?></td>
                     <td><?= esc($customer['phone']) ?></td>
+                    <td><span class="status <?= strtolower(esc($customer['account_status'], 'attr')) ?>"><?= esc($customer['account_status']) ?></span></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
