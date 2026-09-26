@@ -1,9 +1,6 @@
     </main>
     <footer class="site-footer">
-        <div class="shell footer-inner">
-            <p>Tasks for Today Management System</p>
-            <p>Developed by Angelo Kacey N. Pineda &middot; TW33</p>
-        </div>
+        <div class="container">Tasks for Today &copy; <?= date('Y') ?> &middot; CodeIgniter 4 learning project &middot; Angelo Kacey N. Pineda, TW33</div>
     </footer>
 </body>
 </html>

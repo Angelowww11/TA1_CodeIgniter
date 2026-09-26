@@ -12,7 +12,7 @@ final class PagesTest extends CIUnitTestCase
         $result = $this->get('/');
 
         $result->assertStatus(200);
-        $result->assertSee('Make today count.');
+        $result->assertSee('Tasks for Today');
     }
 
     public function testAboutPageLoads(): void

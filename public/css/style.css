@@ -19,6 +19,7 @@ body {
 }
 
 a { color: inherit; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 .container {
     width: min(1080px, calc(100% - 32px));
@@ -46,6 +47,9 @@ a { color: inherit; }
 nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
 nav a { color: #dce4e4; font-size: 0.95rem; text-decoration: none; }
 nav a:hover { color: #fff; }
+nav a.active { color: #fff; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 7px; }
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 10; padding: 8px 12px; background: #fff; color: var(--ink); }
+.skip-link:focus { left: 8px; }
 
 main { min-height: calc(100vh - 142px); padding: 64px 0; }
 
@@ -101,6 +105,11 @@ tr:last-child td { border-bottom: 0; }
 .status.active { color: #185a32; background: #dff3e6; }
 .status.inactive { color: #7a2630; background: #f7dfe2; }
 .site-footer { padding: 22px 0; color: var(--muted); font-size: 0.88rem; }
+.listing { margin-top: 48px; }
+.listing h2, section > h2 { margin-bottom: 18px; font-size: 1.5rem; }
+.summary-grid .card-number { margin-bottom: 18px; }
+.profile-card { max-width: 620px; }
+.profile-card p { margin-bottom: 10px; }
 
 @media (max-width: 720px) {
     .nav-wrap { align-items: flex-start; flex-direction: column; padding: 18px 0; }
