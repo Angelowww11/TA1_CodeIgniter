@@ -1,16 +1,16 @@
-# Public hosting guide
+# Hosting the Tasks for Today System
 
-This CodeIgniter project needs a host with PHP 8.2 or newer, MySQL or MariaDB, and Apache rewrite support. GitHub Pages cannot run it because GitHub Pages serves static files only.
+This application requires PHP 8.2 or newer, MySQL or MariaDB, Composer dependencies, and URL rewriting. GitHub Pages cannot run CodeIgniter because it only serves static files.
 
-## Recommended free-host workflow
+## Deployment workflow
 
-InfinityFree and similar shared hosts provide PHP, MySQL, a free subdomain, SSL, phpMyAdmin, and `.htaccess` support. An account must be created or signed in before deployment.
+1. Choose a PHP host that provides MySQL, phpMyAdmin, HTTPS, and Apache rewrite support.
+2. Create a production database and import `database/tasks_today.sql` through the host's phpMyAdmin.
+3. Run `composer install --no-dev --optimize-autoloader` before uploading, or run it through the host if Composer access is available.
+4. Copy `deployment/env.production.example` to `.env` on the server and fill in the provided domain and database credentials.
+5. Point the domain document root to the project's `public` directory. If the host cannot change the document root, follow its CodeIgniter-specific public-folder instructions.
+6. Make the `writable` directory writable by the web-server account.
+7. Verify `/`, `/tasks`, `/profile`, and `/about` over HTTPS.
+8. Confirm that the production homepage shows records for the date on which the SQL file was imported.
 
-1. On the local computer, run `composer install --no-dev --optimize-autoloader` in the project folder.
-2. Create a hosting account and a MySQL database in its control panel.
-3. Open the host's phpMyAdmin, select the new database, and import `database/pos_database.sql`.
-4. Copy `deployment/env.production.example` to `.env` and replace the domain and database placeholders with the values supplied by the host.
-5. Upload the project to the website document root, including the generated `vendor` folder and the root `.htaccess` file.
-6. Confirm that `/`, `/customers`, and `/users` load over HTTPS and each account page shows five records.
-
-Never commit the production `.env` file or database password to GitHub.
+Never commit `.env`, passwords, or hosting credentials to GitHub.

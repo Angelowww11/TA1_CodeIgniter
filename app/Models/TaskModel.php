@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class TaskModel extends Model
 {
-    protected $table = 'users';
+    protected $table = 'tasks';
     protected $primaryKey = 'id';
     protected $returnType = 'array';
     protected $useAutoIncrement = true;
     protected $allowedFields = [
-        'username',
-        'full_name',
-        'email',
+        'title',
+        'status',
+        'task_date',
         'created_at',
     ];
 }

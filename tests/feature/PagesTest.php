@@ -12,7 +12,7 @@ final class PagesTest extends CIUnitTestCase
         $result = $this->get('/');
 
         $result->assertStatus(200);
-        $result->assertSee('A simple starting point for a point-of-sale system');
+        $result->assertSee('Make today count.');
     }
 
     public function testAboutPageLoads(): void
@@ -20,24 +20,24 @@ final class PagesTest extends CIUnitTestCase
         $result = $this->get('/about');
 
         $result->assertStatus(200);
-        $result->assertSee('How this beginner project works');
+        $result->assertSee('A focused view of daily work.');
     }
 
-    public function testCustomerPageShowsStaticRecords(): void
+    public function testTaskPageShowsAllDatabaseRecords(): void
     {
-        $result = $this->get('/customers');
+        $result = $this->get('/tasks');
 
         $result->assertStatus(200);
-        $result->assertSee('Ana Santos');
-        $result->assertSee('Ella Garcia');
+        $result->assertSee('Finish the dashboard views');
+        $result->assertSee('Deploy and verify the live website');
     }
 
-    public function testUserPageShowsStaticRecords(): void
+    public function testProfilePageShowsTheDemoUser(): void
     {
-        $result = $this->get('/users');
+        $result = $this->get('/profile');
 
         $result->assertStatus(200);
-        $result->assertSee('admin01');
-        $result->assertSee('manager01');
+        $result->assertSee('Angelo Kacey N. Pineda');
+        $result->assertSee('angelowww11');
     }
 }

@@ -1,95 +1,97 @@
-# SimplePOS CodeIgniter Database Integration
+# Tasks for Today Management System
 
-This is a beginner-friendly four-page CodeIgniter 4 project for IT0049 TFA2. It continues the TFA1 POS website by replacing static PHP arrays with records from the `pos_database` MySQL database.
+A CodeIgniter 4 and MySQL application created for IT0049 Technical Summative Assessment 1. The system provides a date-filtered dashboard, a complete task list, one demo-user profile, and a developer page while keeping routing, controllers, models, views, and database files clearly separated.
+
+## Student information
+
+- **Student:** Angelo Kacey N. Pineda
+- **Section:** TW33
+- **Course:** IT0049 Web System Technologies
+- **Repository:** <https://github.com/Angelowww11/TA1_CodeIgniter>
 
 ## Requirements
 
-- PHP 8.2 or newer
-- Composer
-- XAMPP with Apache and MySQL
+- XAMPP with MySQL or MariaDB
+- PHP 8.2 or newer with `intl`, `mbstring`, and `mysqli`
+- Composer 2
 
-## Database setup
+## Database setup with XAMPP
 
-1. Start Apache and MySQL in XAMPP.
-2. Open phpMyAdmin and import `database/pos_database.sql`.
-3. Confirm that `customer_accounts` and `user_accounts` each contain five records.
-4. Keep the default XAMPP username `root` and blank password, or update `.env` if your MySQL credentials differ.
+1. Open the XAMPP Control Panel and start **Apache** and **MySQL**.
+2. Visit <http://localhost/phpmyadmin>.
+3. Select **Import** and choose `database/tasks_today.sql`.
+4. Confirm that phpMyAdmin shows the `tasks_today` database with `tasks` and `users` tables.
+5. Confirm that `tasks` has at least eight rows across at least three dates and `users` has exactly one row.
 
-## How to run the project
+The SQL export uses `CURDATE()` so importing it always creates records for the actual import date. The project also includes equivalent CodeIgniter migrations and a seeder.
 
-Open a terminal in the project folder, then run:
+## CodeIgniter setup
+
+Open a terminal in the project folder:
 
 ```powershell
 Copy-Item env .env
 composer install
-php spark serve
+C:\xampp\php\php.exe spark migrate
+C:\xampp\php\php.exe spark db:seed TaskSystemSeeder
+C:\xampp\php\php.exe spark serve
 ```
 
-Open <http://localhost:8080> in your browser.
+If you import `database/tasks_today.sql`, do not run the migration and seeder afterward unless you first remove or recreate the database. Both workflows create the same required records.
 
-To run the included page tests:
+Open <http://localhost:8080> after starting the development server.
+
+## Required pages
+
+| URL | Purpose |
+| --- | --- |
+| `/` | Shows only tasks whose `task_date` equals today's date |
+| `/tasks` | Shows every task ordered by `task_date`, then `id` |
+| `/profile` | Shows the single record from the `users` table |
+| `/about` | Identifies the developer and explains the MVC flow |
+
+## Project structure
+
+```text
+app/
+  Config/Routes.php
+  Controllers/Home.php
+  Controllers/Tasks.php
+  Controllers/Profile.php
+  Controllers/Pages.php
+  Database/Migrations/
+  Database/Seeds/TaskSystemSeeder.php
+  Models/TaskModel.php
+  Models/UserModel.php
+  Views/
+database/tasks_today.sql
+public/css/tasks.css
+```
+
+The home controller uses `where('task_date', date('Y-m-d'))` before `findAll()`. The task-list controller does not apply that filter and orders all records by date.
+
+## Testing
+
+Run the application tests:
 
 ```powershell
-php vendor\bin\phpunit
+C:\xampp\php\php.exe vendor\phpunit\phpunit\phpunit
 ```
 
-## Available pages
+Manual checks:
 
-| URL | Page |
-| --- | --- |
-| `/` | Landing page |
-| `/about` | About page |
-| `/customers` | Customer Accounts |
-| `/users` | User Accounts |
+- `/` contains only today's four seeded tasks.
+- `/tasks` contains all eight seeded tasks in chronological order.
+- `/profile` contains Angelo Kacey N. Pineda.
+- `/about` identifies the developer and section.
+- Navigation works at desktop and mobile widths.
+- Database output is escaped with `esc()` in every view.
 
-## How the code works
+## Evidence and documentation
 
-1. `app/Config/Routes.php` connects each URL to a controller method.
-2. `Pages.php` displays the landing and about pages.
-3. `CustomerModel.php` and `UserModel.php` represent the two MySQL tables.
-4. `Customers.php` and `Users.php` retrieve records through the Models and Query Builder.
-5. The customer and user views receive those records and use `foreach` to create the table rows.
-6. The reusable header and footer partials keep the navigation and page structure consistent.
+- Website screenshots: `evidence/screenshots/tsa1-*.png`
+- XAMPP/phpMyAdmin screenshot checklist: `evidence/XAMPP_SCREENSHOT_GUIDE.md`
+- Completed report: `submission/IT0049 - TSA1 - Tasks for Today System Documentation.docx`
+- Deployment notes: `HOSTING.md`
 
-Example route:
-
-```php
-$routes->get('/customers', 'Customers::index');
-```
-
-Example Model query and controller-to-view data flow:
-
-```php
-$customers = $customerModel
-    ->select("CONCAT(first_name, ' ', last_name) AS full_name", false)
-    ->select('email, phone, account_status')
-    ->findAll();
-
-return view('customers/index', [
-    'title' => 'Customer Accounts',
-    'customers' => $customers,
-]);
-```
-
-Example view loop:
-
-```php
-<?php foreach ($customers as $customer): ?>
-    <tr>
-        <td><?= esc($customer['full_name']) ?></td>
-        <td><?= esc($customer['email']) ?></td>
-        <td><?= esc($customer['phone']) ?></td>
-    </tr>
-<?php endforeach ?>
-```
-
-`esc()` safely displays text in HTML. The account records now remain available after the web server restarts because they are stored in MySQL.
-
-## Submission files
-
-- Completed activity document: `submission/IT0049 - TFA2 - Completed Database Integration.docx`
-- Database export: `database/pos_database.sql`
-- Website and phpMyAdmin evidence: `evidence/screenshots/`
-- Public-host preparation: `HOSTING.md` and `deployment/env.production.example`
-
-Repository: <https://github.com/Angelowww11/TA1_CodeIgniter>
+Do not commit `.env`, database passwords, or production credentials.
