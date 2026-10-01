@@ -1,97 +1,89 @@
-# Tasks for Today Management System
+# SimplePOS Customer and User Accounts
 
-A CodeIgniter 4 and MySQL application created for IT0049 Technical Summative Assessment 1. The system provides a date-filtered dashboard, a complete task list, one demo-user profile, and a developer page while keeping routing, controllers, models, views, and database files clearly separated.
+This CodeIgniter 4 project extends the POS customer and user account pages with validated create and edit forms. It stores customer records in MySQL, hashes passwords for newly created accounts, and prepares uploaded user avatars as 320 × 320 JPG thumbnails.
 
-## Student information
+## Student and repository
 
 - **Student:** Angelo Kacey N. Pineda
 - **Section:** TW33
 - **Course:** IT0049 Web System Technologies
-- **Repository:** <https://github.com/Angelowww11/TA1_CodeIgniter>
+- **Repository:** https://github.com/Angelowww11/TA1_CodeIgniter
+- **Hosted application:** Pending deployment. Add the live HTTPS URL here after publishing to a PHP host.
 
 ## Requirements
 
-- XAMPP with MySQL or MariaDB
-- PHP 8.2 or newer with `intl`, `mbstring`, and `mysqli`
+- PHP 8.2 or newer with `intl`, `mbstring`, `mysqli`, and GD enabled
+- MySQL or MariaDB
 - Composer 2
+- Apache with rewrite support, or another server configured to route requests to `public/`
 
-## Database setup with XAMPP
+## Local setup
 
-1. Open the XAMPP Control Panel and start **Apache** and **MySQL**.
-2. Visit <http://localhost/phpmyadmin>.
-3. Select **Import** and choose `database/tasks_today.sql`.
-4. Confirm that phpMyAdmin shows the `tasks_today` database with `tasks` and `users` tables.
-5. Confirm that `tasks` has at least eight rows across at least three dates and `users` has exactly one row.
-
-The SQL export uses `CURDATE()` so importing it always creates records for the actual import date. The project also includes equivalent CodeIgniter migrations and a seeder.
-
-## CodeIgniter setup
-
-Open a terminal in the project folder:
+1. Start Apache and MySQL in XAMPP.
+2. Import `database/pos_database.sql` with phpMyAdmin for a fresh database. **This export drops and recreates the POS tables**, so back up any existing data first.
+3. Copy `env` to `.env` and set `database.default.database = pos_database`. Add the correct database username and password for your machine.
+4. In XAMPP, open `php.ini` and enable `extension=gd`, then restart Apache. Install dependencies and start the server:
 
 ```powershell
 Copy-Item env .env
 composer install
-C:\xampp\php\php.exe spark migrate
-C:\xampp\php\php.exe spark db:seed TaskSystemSeeder
 C:\xampp\php\php.exe spark serve
 ```
 
-If you import `database/tasks_today.sql`, do not run the migration and seeder afterward unless you first remove or recreate the database. Both workflows create the same required records.
+5. Open <http://localhost:8080>.
 
-Open <http://localhost:8080> after starting the development server.
+For an existing TFA2 `user_accounts` table, add the new nullable column without reimporting the destructive SQL export:
 
-## Required pages
+```sql
+ALTER TABLE user_accounts ADD COLUMN avatar VARCHAR(255) NULL AFTER account_status;
+```
 
-| URL | Purpose |
+The image library requires the PHP GD extension. Uploaded images are stored in `public/uploads/avatars`; make that directory writable by the web server in production.
+
+## Assessment features
+
+| Requirement | Implementation |
 | --- | --- |
-| `/` | Shows only tasks whose `task_date` equals today's date |
-| `/tasks` | Shows every task ordered by `task_date`, then `id` |
-| `/profile` | Shows the single record from the `users` table |
-| `/about` | Identifies the developer and explains the MVC flow |
+| New customer at `/customers/new` | Required first name, last name, email, and phone; email format and uniqueness checks; field values redisplay when validation fails |
+| Edit customer | `/customers/edit/{id}` loads the existing account; `/customers/update/{id}` validates and updates it |
+| New user at `/users/new` | Required unique username, full name, valid unique email, password, and allowed role/status |
+| Edit user | `/users/edit/{id}` pre-fills account data; blank password preserves the existing password hash |
+| Avatar upload | Edit form accepts JPG/PNG under 2 MB, verifies server-detected MIME type, generates a random filename, converts to a 320 × 320 JPG thumbnail, and stores only the filename in `user_accounts.avatar` |
+| Avatar display | `/users` shows the prepared image or `public/images/avatar-placeholder.svg` |
+| Database export | `database/pos_database.sql` includes the `avatar` column and existing sample records |
 
-## Project structure
+## Routes
 
-```text
-app/
-  Config/Routes.php
-  Controllers/Home.php
-  Controllers/Tasks.php
-  Controllers/Profile.php
-  Controllers/Pages.php
-  Database/Migrations/
-  Database/Seeds/TaskSystemSeeder.php
-  Models/TaskModel.php
-  Models/UserModel.php
-  Views/
-database/tasks_today.sql
-public/css/tasks.css
-```
+- `/` and `/customers` — customer account listing
+- `/customers/new` — create a customer
+- `/customers/edit/{id}` — edit a customer
+- `/users` — user account listing with avatars
+- `/users/new` — create a user
+- `/users/edit/{id}` — edit a user and optionally upload an avatar
 
-The home controller uses `where('task_date', date('Y-m-d'))` before `findAll()`. The task-list controller does not apply that filter and orders all records by date.
+All form submissions use CSRF protection. Values are trimmed and normalized before validation, allowlisted fields are passed to the models, and views escape displayed values. Database unique keys remain the final protection against duplicate usernames and emails.
 
-## Testing
+## Deployment
 
-Run the application tests:
+CodeIgniter needs a PHP-capable host with MySQL/MariaDB; GitHub Pages cannot run this application. Follow `HOSTING.md` to configure the production database and document root. The assignment also requires a live application URL, which must be added above after hosting is configured.
 
-```powershell
-C:\xampp\php\php.exe vendor\phpunit\phpunit\phpunit
-```
+## Evidence
 
-Manual checks:
+## Screenshot evidence
 
-- `/` contains only today's four seeded tasks.
-- `/tasks` contains all eight seeded tasks in chronological order.
-- `/profile` contains Angelo Kacey N. Pineda.
-- `/about` identifies the developer and section.
-- Navigation works at desktop and mobile widths.
-- Database output is escaped with `esc()` in every view.
+The completed local workflows are shown below. The same screenshots are collected in the submission report and `evidence/screenshots/`.
 
-## Evidence and documentation
+| Evidence | Screenshot |
+| --- | --- |
+| Customer list | [Open screenshot](evidence/screenshots/tfa3-customer-list.png) |
+| Customer validation | [Open screenshot](evidence/screenshots/tfa3-customer-validation.png) |
+| Customer edit | [Open screenshot](evidence/screenshots/tfa3-customer-edit.png) |
+| Customer created | [Open screenshot](evidence/screenshots/tfa3-customer-created.png) |
+| User list and fallback avatars | [Open screenshot](evidence/screenshots/tfa3-user-list-fallback.png) |
+| User validation | [Open screenshot](evidence/screenshots/tfa3-user-validation.png) |
+| User edit | [Open screenshot](evidence/screenshots/tfa3-user-edit.png) |
+| Avatar upload success | [Open screenshot](evidence/screenshots/tfa3-avatar-upload-success.png) |
+| Avatar upload rejection | [Open screenshot](evidence/screenshots/tfa3-avatar-upload-rejected.png) |
+| Database avatar column | [Open screenshot](evidence/screenshots/tfa3-database-avatar-column.png) |
 
-- Website screenshots: `evidence/screenshots/tsa1-*.png`
-- XAMPP/phpMyAdmin screenshot checklist: `evidence/XAMPP_SCREENSHOT_GUIDE.md`
-- Completed report: `submission/IT0049 - TSA1 - Tasks for Today System Documentation.docx`
-- Deployment notes: `HOSTING.md`
-
-Do not commit `.env`, database passwords, or production credentials.
+See `evidence/TFA3_SCREENSHOT_GUIDE.md` for the evidence checklist and capture notes.

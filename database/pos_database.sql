@@ -47,6 +47,7 @@ CREATE TABLE `user_accounts` (
   `email` varchar(100) NOT NULL,
   `role` varchar(20) NOT NULL,
   `account_status` varchar(20) NOT NULL DEFAULT 'Active',
+  `avatar` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
@@ -56,7 +57,7 @@ CREATE TABLE `user_accounts` (
 
 LOCK TABLES `user_accounts` WRITE;
 /*!40000 ALTER TABLE `user_accounts` DISABLE KEYS */;
-INSERT INTO `user_accounts` VALUES (1,'admin01','hashed_password_1','John','Admin','john@pos.com','Admin','Active','2026-09-19 09:21:53'),(2,'cashier01','hashed_password_2','Ella','Cruz','ella@pos.com','Cashier','Active','2026-09-19 09:21:53'),(3,'cashier02','hashed_password_3','Mark','Tan','mark@pos.com','Cashier','Active','2026-09-19 09:21:53'),(4,'manager01','hashed_password_4','Sofia','Lim','sofia@pos.com','Manager','Active','2026-09-19 09:21:53'),(5,'cashier03','hashed_password_5','Paul','Ramos','paul@pos.com','Cashier','Inactive','2026-09-19 09:21:53');
+INSERT INTO `user_accounts` (`user_id`,`username`,`password_hash`,`first_name`,`last_name`,`email`,`role`,`account_status`,`avatar`,`created_at`) VALUES (1,'admin01','hashed_password_1','John','Admin','john@pos.com','Admin','Active',NULL,'2026-09-19 09:21:53'),(2,'cashier01','hashed_password_2','Ella','Cruz','ella@pos.com','Cashier','Active',NULL,'2026-09-19 09:21:53'),(3,'cashier02','hashed_password_3','Mark','Tan','mark@pos.com','Cashier','Active',NULL,'2026-09-19 09:21:53'),(4,'manager01','hashed_password_4','Sofia','Lim','sofia@pos.com','Manager','Active',NULL,'2026-09-19 09:21:53'),(5,'cashier03','hashed_password_5','Paul','Ramos','paul@pos.com','Cashier','Inactive',NULL,'2026-09-19 09:21:53');
 /*!40000 ALTER TABLE `user_accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
