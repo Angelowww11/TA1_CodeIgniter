@@ -124,3 +124,6 @@ _modules/*
 
 /results/
 /phpunit.xml
+
+# Keep assessment submission documents local, not in the GitHub repository.
+/submission/

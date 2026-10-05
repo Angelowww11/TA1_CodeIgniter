@@ -48,6 +48,17 @@ class Customers extends BaseController
         return redirect()->to(site_url('customers'))->with('message', 'Customer account updated.');
     }
 
+    public function delete(int $id)
+    {
+        $model = new CustomerModel();
+        if (! $model->find($id)) return $this->response->setStatusCode(404)->setBody('Customer not found.');
+        if (db_connect()->table('sales')->where('customer_id', $id)->countAllResults() > 0) {
+            return redirect()->to(site_url('customers'))->with('error', 'This customer has sales history and cannot be deleted.');
+        }
+        $model->delete($id);
+        return redirect()->to(site_url('customers'))->with('message', 'Customer deleted.');
+    }
+
     private function customerInput(): array
     {
         return ['first_name' => trim((string) $this->request->getPost('first_name')), 'last_name' => trim((string) $this->request->getPost('last_name')), 'email' => strtolower(trim((string) $this->request->getPost('email'))), 'phone' => trim((string) $this->request->getPost('phone')), 'address' => trim((string) $this->request->getPost('address')) ?: null, 'account_status' => trim((string) ($this->request->getPost('account_status') ?: 'Active'))];

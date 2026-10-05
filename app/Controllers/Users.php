@@ -24,8 +24,13 @@ class Users extends BaseController
         $input = $this->userInput();
         $rules = ['username' => 'required|alpha_numeric|min_length[4]|max_length[50]|is_unique[user_accounts.username]', 'full_name' => 'required|string|max_length[101]', 'email' => 'required|valid_email|max_length[100]|is_unique[user_accounts.email]', 'password' => 'required|min_length[12]|max_length[255]', 'role' => 'required|in_list[Admin,Manager,Cashier]', 'account_status' => 'required|in_list[Active,Inactive]'];
         if (! $this->validate($rules)) return view('users/form', ['title' => 'New User', 'user' => $input, 'errors' => $this->validator->getErrors(), 'action' => site_url('users'), 'editing' => false]);
+        $newAvatar = null;
+        $uploadError = $this->prepareAvatar($this->request->getFile('avatar'), $newAvatar);
+        if ($uploadError !== null) return view('users/form', ['title' => 'New User', 'user' => $input, 'errors' => ['avatar' => $uploadError], 'action' => site_url('users'), 'editing' => false]);
         [$first, $last] = $this->splitName($input['full_name']);
-        (new UserModel())->insert(['username' => $input['username'], 'first_name' => $first, 'last_name' => $last, 'email' => $input['email'], 'password_hash' => password_hash($input['password'], PASSWORD_DEFAULT), 'role' => $input['role'], 'account_status' => $input['account_status']]);
+        $data = ['username' => $input['username'], 'first_name' => $first, 'last_name' => $last, 'email' => $input['email'], 'password_hash' => password_hash($input['password'], PASSWORD_DEFAULT), 'role' => $input['role'], 'account_status' => $input['account_status']];
+        if ($newAvatar !== null) $data['avatar'] = $newAvatar;
+        (new UserModel())->insert($data);
         return redirect()->to(site_url('users'))->with('message', 'User account created.');
     }
 
@@ -70,6 +75,18 @@ class Users extends BaseController
         return redirect()->to(site_url('users'))->with('message', 'User account updated.');
     }
 
+    public function delete(int $id)
+    {
+        $model = new UserModel();
+        $user = $model->find($id);
+        if (! $user) return $this->response->setStatusCode(404)->setBody('User not found.');
+        if ((int) session('auth_user_id') === $id) return redirect()->to(site_url('users'))->with('error', 'You cannot delete your own account.');
+        if (db_connect()->table('sales')->where('sold_by', $id)->countAllResults() > 0) return redirect()->to(site_url('users'))->with('error', 'This staff member has sales history and cannot be deleted.');
+        $model->delete($id);
+        if (! empty($user['avatar'])) @unlink(FCPATH . 'uploads/avatars/' . basename($user['avatar']));
+        return redirect()->to(site_url('users'))->with('message', 'Staff account deleted.');
+    }
+
     private function userInput(): array
     {
         return ['username' => trim((string) $this->request->getPost('username')), 'full_name' => trim((string) $this->request->getPost('full_name')), 'email' => strtolower(trim((string) $this->request->getPost('email'))), 'password' => (string) $this->request->getPost('password'), 'role' => trim((string) $this->request->getPost('role')), 'account_status' => trim((string) $this->request->getPost('account_status')) ?: 'Active'];
@@ -96,7 +113,7 @@ class Users extends BaseController
         $directory = FCPATH . 'uploads/avatars';
         if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) return 'The avatar folder is not writable.';
         try {
-            service('image', 'gd')->withFile($file->getTempName())->fit(320, 320, 'center')->save($directory . DIRECTORY_SEPARATOR . $filename, 82);
+            service('image', 'gd')->withFile($file->getTempName())->fit(320, 320, 'center')->convert(IMAGETYPE_JPEG)->save($directory . DIRECTORY_SEPARATOR . $filename, 82);
         } catch (Throwable $e) {
             log_message('error', 'Avatar preparation failed: {message}', ['message' => $e->getMessage()]);
             return 'The image could not be prepared. Check that PHP GD is enabled and upload a valid image.';

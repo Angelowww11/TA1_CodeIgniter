@@ -1,19 +1,12 @@
-# SimplePOS Deployment Notes
+# Deploying SimplePOS on Railway
 
-The TFA4 application requires a PHP 8.2+ host with MySQL or MariaDB, Apache rewrite support, and GD enabled. GitHub Pages is not a suitable host for CodeIgniter.
+This CodeIgniter application needs a persistent PHP service and a MySQL database. The repository includes a Dockerfile and a Railway startup script. Vercel is not used for this PHP application.
 
-## Configure a PHP host
+1. Create a Railway project with a MySQL service and connect the GitHub repository as an application service. Railway detects the root Dockerfile.
+2. Add application variables `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, and `MYSQLDATABASE`, each referencing the corresponding MySQL service variable. Add `POS_ADMIN_PASSWORD` with a private value of at least 12 characters and `CI_ENVIRONMENT=production`.
+3. Generate a public domain for the application service and set `APP_BASE_URL` to its HTTPS URL. The app adds the trailing slash. Set `app.forceGlobalSecureRequests=true` after HTTPS is available.
+4. Deploy. The startup script waits for MySQL, runs migrations, creates an initial admin only if the staff table is empty, and seeds a small product catalog. Login as `admin01` using the private value of `POS_ADMIN_PASSWORD`.
+5. Mount a Railway volume for `/var/www/html/public/uploads` so uploaded product images and staff avatars remain available after redeploys. Keep the application's `writable` directory writable for sessions, cache, and logs; consider a volume for sessions if running more than one replica.
+6. Open the public site and verify login, products, image upload, customers, staff, sale recording, stock reduction, and sales history. Add the verified HTTPS URL to README and the final assessment document.
 
-1. Create a production MySQL database and user.
-2. Back up existing POS tables. For a fresh database, import `database/pos_database.sql`; this export drops and recreates its POS tables.
-3. For an existing TFA2 installation, run `ALTER TABLE user_accounts ADD COLUMN avatar VARCHAR(255) NULL AFTER account_status;` once instead of importing the export.
-4. Install dependencies with `composer install --no-dev --optimize-autoloader`.
-5. Configure `.env` with the production `app.baseURL`, database credentials, and `CI_ENVIRONMENT = production`.
-6. Point the web root to the project's `public` directory and enable URL rewriting.
-7. Ensure `public/uploads/avatars` is writable by the web-server account. Keep PHP execution disabled in this uploads directory.
-8. Verify `/`, `/customers/new`, `/customers/edit/{id}`, `/users/new`, and `/users/edit/{id}` over HTTPS. Check validation errors, unique-field behavior, avatar upload/replacement, and the placeholder image.
-9. Add the resulting public HTTPS URL to the README and assessment document.
-
-Before public deployment, replace every sample account password, enable secure cookies over HTTPS, and ensure `writable/session` is writable and outside the public document root. Verify that logged-out requests to customer/user pages and form actions are blocked, and that signing out removes access. The bundled sample password is only for local assessment data.
-
-Do not commit `.env`, passwords, or hosting credentials. The repository URL is https://github.com/Angelowww11/TA1_CodeIgniter. No hosted application URL has been supplied yet.
+The SQL export is for local review. The hosted service uses migrations and seeders so it does not import the sample passwords. Never put `.env`, Railway secrets, or the assessment submission document in Git.

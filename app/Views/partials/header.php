@@ -3,23 +3,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#142a44">
     <title><?= esc($title) ?> | SimplePOS</title>
     <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
 </head>
 <body>
+    <a class="skip-link" href="#content">Skip to content</a>
     <header class="site-header">
         <div class="container nav-wrap">
-            <a class="brand" href="<?= site_url('/') ?>">SimplePOS</a>
-            <nav aria-label="Main navigation">
+            <a class="brand" href="<?= site_url('/') ?>" aria-label="SimplePOS overview"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>simple<span class="brand-accent">pos</span><small>STORE WORKSPACE</small></span></a>
+            <nav class="site-nav" aria-label="Main navigation">
                 <?php if (session()->get('auth_user_id')): ?>
-                <a href="<?= site_url('customers') ?>">Customers</a>
-                <a href="<?= site_url('users') ?>">Users</a>
-                <span>Signed in as <?= esc(session()->get('auth_username')) ?></span>
-                <form class="logout-form" method="post" action="<?= site_url('logout') ?>">
-                    <?= csrf_field() ?><button type="submit">Sign out</button>
-                </form>
-                <?php else: ?><a href="<?= site_url('login') ?>">Staff login</a><?php endif ?>
+                    <a href="<?= site_url('/') ?>" <?= uri_string() === '' ? 'aria-current="page"' : '' ?>>Overview</a>
+                    <a href="<?= site_url('products') ?>" <?= str_starts_with(uri_string(), 'products') ? 'aria-current="page"' : '' ?>>Products</a>
+                    <a href="<?= site_url('sales') ?>" <?= str_starts_with(uri_string(), 'sales') ? 'aria-current="page"' : '' ?>>Sales</a>
+                    <a href="<?= site_url('customers') ?>" <?= str_starts_with(uri_string(), 'customers') ? 'aria-current="page"' : '' ?>>Customers</a>
+                    <a href="<?= site_url('users') ?>" <?= str_starts_with(uri_string(), 'users') ? 'aria-current="page"' : '' ?>>Staff</a>
+                <?php endif ?>
             </nav>
+            <div class="nav-account">
+                <?php if (session()->get('auth_user_id')): ?>
+                    <span class="account-name"><span class="account-dot"></span><?= esc(session()->get('auth_username')) ?></span>
+                    <form class="logout-form" method="post" action="<?= site_url('logout') ?>"><?= csrf_field() ?><button type="submit">Sign out</button></form>
+                <?php else: ?><span class="account-name">Staff access</span><?php endif ?>
+            </div>
         </div>
     </header>
-    <main class="container">
+    <main id="content" class="container site-main">

@@ -9,7 +9,7 @@ class Auth extends BaseController
     public function login()
     {
         if (session()->get('auth_user_id')) {
-            return redirect()->to(site_url('customers'));
+            return redirect()->to(site_url('/'));
         }
 
         return view('auth/login', [
@@ -40,7 +40,7 @@ class Auth extends BaseController
             'auth_username' => $user['username'],
         ]);
 
-        return redirect()->to(site_url('customers'));
+        return redirect()->to(site_url('/'));
     }
 
     public function logout()

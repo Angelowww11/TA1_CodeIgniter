@@ -2,7 +2,7 @@
 <section class="login-panel">
     <p class="eyebrow">Staff access</p>
     <h1>Sign in to SimplePOS</h1>
-    <p>Use your staff account to manage customers and users.</p>
+    <p>Use your staff account to manage products, customers, staff, and sales.</p>
     <?php if ($signedOut): ?><p class="notice" role="status">You have signed out successfully.</p><?php endif ?>
     <?php if ($error): ?><p class="form-error" role="alert"><?= esc($error) ?></p><?php endif ?>
     <form class="record-form" action="<?= site_url('login') ?>" method="post">

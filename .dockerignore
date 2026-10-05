@@ -1,0 +1,13 @@
+.git
+.docx-review
+.env
+submission
+evidence
+tests
+vendor
+writable/cache
+writable/logs
+writable/session
+writable/debugbar
+*.docx
+*.pdf
