@@ -33,7 +33,7 @@ app.appTimezone = 'Asia/Manila'
 #--------------------------------------------------------------------
 
 database.default.hostname = 127.0.0.1
-database.default.database = tasks_today
+database.default.database = pos_database
 database.default.username = root
 database.default.password =
 database.default.DBDriver = MySQLi

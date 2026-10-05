@@ -1,6 +1,30 @@
-# SimplePOS Customer and User Accounts
+# SimplePOS Sessions and Authentication
 
-This CodeIgniter 4 project extends the POS customer and user account pages with validated create and edit forms. It stores customer records in MySQL, hashes passwords for newly created accounts, and prepares uploaded user avatars as 320 × 320 JPG thumbnails.
+This CodeIgniter 4 POS project includes validated customer/user forms, avatar uploads, and TFA4 staff authentication. Customer and user listings, forms, and write actions require an active staff login.
+
+## TFA4 login and session workflow
+
+- Open `/login` and sign in with the local sample account **admin01 / SimplePOS!2026**.
+- The five sample users have separately salted password hashes. Inactive `cashier03` cannot sign in.
+- Login uses `password_verify()`, regenerates the session ID, and stores the staff ID and username in the session.
+- `AuthFilter` protects `/`, every `/customers` route, and every `/users` route. It also checks that the account still exists and is active. Automatic routing is disabled.
+- Sign out submits a CSRF-protected POST to `/logout`, destroys the session, and returns to login. Protected responses use `Cache-Control: no-store`.
+- The sample password is for local assessment data. Set private passwords through the user edit form before deployment.
+
+For an existing TFA3 database, run `php spark db:seed DemoUserPasswordSeeder`. This uses `password_hash()` to upgrade only the old sample placeholders and preserves passwords already changed. For a fresh database, the SQL export already includes valid hashes. The existing `user_accounts.password_hash` column is the password storage field; no duplicate password column is needed.
+
+## TFA4 screenshots
+
+| Evidence | Screenshot |
+| --- | --- |
+| Logged-out protected request redirects to login | [Screenshot](evidence/screenshots/tfa4-protected-redirect.png) |
+| Incorrect password rejected | [Screenshot](evidence/screenshots/tfa4-invalid-login.png) |
+| Customer list after login | [Screenshot](evidence/screenshots/tfa4-customers-signed-in.png) |
+| User list after login | [Screenshot](evidence/screenshots/tfa4-users-signed-in.png) |
+| User edit form after login | [Screenshot](evidence/screenshots/tfa4-user-edit-signed-in.png) |
+| Logout confirmation | [Screenshot](evidence/screenshots/tfa4-logout.png) |
+
+Access checks passed for all protected GET routes when logged out and all account pages when logged in. Incorrect and inactive-account logins were rejected; access was blocked again after logout.
 
 ## Student and repository
 
@@ -25,7 +49,6 @@ This CodeIgniter 4 project extends the POS customer and user account pages with 
 4. In XAMPP, open `php.ini` and enable `extension=gd`, then restart Apache. Install dependencies and start the server:
 
 ```powershell
-Copy-Item env .env
 composer install
 C:\xampp\php\php.exe spark serve
 ```
@@ -66,8 +89,6 @@ All form submissions use CSRF protection. Values are trimmed and normalized befo
 ## Deployment
 
 CodeIgniter needs a PHP-capable host with MySQL/MariaDB; GitHub Pages cannot run this application. Follow `HOSTING.md` to configure the production database and document root. The assignment also requires a live application URL, which must be added above after hosting is configured.
-
-## Evidence
 
 ## Screenshot evidence
 

@@ -1,6 +1,6 @@
 # SimplePOS Deployment Notes
 
-The TFA3 application requires a PHP 8.2+ host with MySQL or MariaDB, Apache rewrite support, and GD enabled. GitHub Pages is not a suitable host for CodeIgniter.
+The TFA4 application requires a PHP 8.2+ host with MySQL or MariaDB, Apache rewrite support, and GD enabled. GitHub Pages is not a suitable host for CodeIgniter.
 
 ## Configure a PHP host
 
@@ -13,5 +13,7 @@ The TFA3 application requires a PHP 8.2+ host with MySQL or MariaDB, Apache rewr
 7. Ensure `public/uploads/avatars` is writable by the web-server account. Keep PHP execution disabled in this uploads directory.
 8. Verify `/`, `/customers/new`, `/customers/edit/{id}`, `/users/new`, and `/users/edit/{id}` over HTTPS. Check validation errors, unique-field behavior, avatar upload/replacement, and the placeholder image.
 9. Add the resulting public HTTPS URL to the README and assessment document.
+
+Before public deployment, replace every sample account password, enable secure cookies over HTTPS, and ensure `writable/session` is writable and outside the public document root. Verify that logged-out requests to customer/user pages and form actions are blocked, and that signing out removes access. The bundled sample password is only for local assessment data.
 
 Do not commit `.env`, passwords, or hosting credentials. The repository URL is https://github.com/Angelowww11/TA1_CodeIgniter. No hosted application URL has been supplied yet.
