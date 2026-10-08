@@ -9,7 +9,7 @@ $isActive = static fn (string $route): string => $path === $route ? ' aria-curre
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tasks for Today management dashboard built with CodeIgniter 4.">
     <title><?= esc($title) ?> | Tasks for Today</title>
-    <link rel="stylesheet" href="<?= base_url('css/tasks.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/tasks.css') ?>?v=<?= substr(md5_file(FCPATH . 'css/tasks.css'), 0, 12) ?>">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
