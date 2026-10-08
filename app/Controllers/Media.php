@@ -8,7 +8,7 @@ class Media extends BaseController
 {
     public function show(string $filename)
     {
-        if (! preg_match('/\A(?:[a-f0-9]{32}|demo-ceramic-mug)\.jpg\z/i', $filename)) {
+        if (! preg_match('/\A(?:[a-f0-9]{32}|demo-ceramic-mug|catalog-(?:ceramic-mug|canvas-tote-v2|notebook|brass-clips))\.jpg\z/i', $filename)) {
             return $this->response->setStatusCode(404);
         }
 

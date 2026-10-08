@@ -5,7 +5,7 @@ SimplePOS runs on Vercel through the community PHP runtime and uses PostgreSQL f
 ## Prepare the project
 
 1. Create a Neon PostgreSQL database through Vercel Marketplace and connect it to the Vercel project for Production, Preview, and Development. The project reads `DATABASE_URL`.
-2. Add `POS_ADMIN_PASSWORD` as a private environment variable in Vercel. Use at least 12 characters. The first deployment creates `admin01` only if the staff table is empty; login with this account and password.
+2. Add `POS_ADMIN_PASSWORD` as a private environment variable in Vercel. Use at least 8 characters. The first deployment creates `admin01` only if the staff table is empty; login with this account and password.
 3. Set `APP_BASE_URL` to the assigned HTTPS domain, including the trailing slash, such as `https://your-project.vercel.app/`.
 4. Deploy the repository's `main` branch. The Composer `vercel` build script runs migrations and seeds the initial admin and catalog. Vercel routes requests through `api/index.php` to CodeIgniter.
 5. After deployment, verify login, products and image upload, customers, staff, sales, stock updates, and sales history. Check the Vercel deployment logs if database migration or build initialization fails.

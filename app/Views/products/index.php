@@ -2,7 +2,7 @@
 <section class="page-heading rise-in"><div><p class="eyebrow">INVENTORY</p><h1>Products</h1><p>Manage prices, stock, images, and archived items.</p></div><a class="button" href="<?= site_url('products/new') ?>">Add product <span aria-hidden="true">+</span></a></section>
 <?php if (session()->getFlashdata('message')): ?><p class="notice" role="status"><?= esc(session()->getFlashdata('message')) ?></p><?php endif ?>
 <?php if ($products): ?><div class="product-grid rise-in">
-<?php foreach ($products as $product): ?><article class="product-card <?= $product['is_archived'] ? 'is-archived' : '' ?>">
+<?php foreach ($products as $product): ?><article class="product-card <?= $product['is_archived'] ? 'is-archived' : '' ?> <?= $product['sku'] === 'TOTE-002' ? 'product-card--tote' : '' ?> <?= $product['sku'] === 'MUG-001' ? 'product-card--mug' : '' ?>">
     <div class="product-art">
         <?php if ($product['image']): ?><img src="<?= site_url('media/' . rawurlencode(basename($product['image']))) ?>" alt="<?= esc($product['name'], 'attr') ?>" loading="lazy"><?php else: ?><span class="product-placeholder" aria-hidden="true"><span></span><span></span><span></span><span></span></span><?php endif ?>
         <?php if ($product['is_archived']): ?><span class="art-tag">Archived</span><?php elseif ((int) $product['stock_quantity'] <= 5): ?><span class="art-tag alert">Low stock</span><?php endif ?>

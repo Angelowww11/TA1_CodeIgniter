@@ -1,17 +1,21 @@
 <?= view('partials/header', ['title' => $title]) ?>
 <section class="dashboard-hero rise-in">
-    <div>
-        <p class="eyebrow light">STORE WORKSPACE <span class="eyebrow-line"></span> OVERVIEW</p>
-        <h1>Ready for the<br><em>next sale.</em></h1>
-        <p>Products, people, and every transaction in one clear view.</p>
+    <div class="hero-copy">
+        <p class="eyebrow light">YOUR STORE <span class="eyebrow-line"></span> AT A GLANCE</p>
+        <h1>Make every<br><em>day count.</em></h1>
+        <p>A clear view of the products on your shelves and the sales through your counter.</p>
         <div class="actions"><a class="button button-light" href="<?= site_url('sales/new') ?>">Record a sale <span aria-hidden="true">↗</span></a><a class="button button-outline-light" href="<?= site_url('products') ?>">View inventory</a></div>
     </div>
-    <div class="receipt-preview" aria-label="Recent sales summary">
+    <div class="hero-stage">
+        <div class="hero-photo hero-photo-main"><img src="<?= base_url('uploads/products/catalog-ceramic-mug.jpg') ?>" alt="White ceramic coffee mug on a light surface"></div>
+        <div class="hero-photo hero-photo-side"><img src="<?= base_url('uploads/products/catalog-notebook.jpg') ?>" alt="Open notebook with pen"></div>
+        <div class="receipt-preview" aria-label="Recent sales summary">
         <div class="receipt-top"><span>SALES LEDGER</span><span>LIVE</span></div>
         <strong><?= number_format($saleCount) ?></strong><span class="receipt-caption">transactions recorded</span>
         <div class="receipt-rule"></div>
         <div class="receipt-total"><span>Total sales</span><b>₱<?= number_format((float) $salesTotal, 2) ?></b></div>
         <div class="receipt-bottom">SIMPLEPOS / STORE OPERATIONS</div>
+        </div>
     </div>
 </section>
 <section class="section-block rise-in" aria-labelledby="at-a-glance">

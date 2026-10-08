@@ -9,8 +9,8 @@ class HostedAdminSeeder extends Seeder
     public function run(): void
     {
         $password = (string) getenv('POS_ADMIN_PASSWORD');
-        if (strlen($password) < 12) {
-            throw new \RuntimeException('Set POS_ADMIN_PASSWORD to at least 12 characters before initializing the hosted app.');
+        if (strlen($password) < 8) {
+            throw new \RuntimeException('Set POS_ADMIN_PASSWORD to at least 8 characters before initializing the hosted app.');
         }
         $existing = $this->db->table('user_accounts')->where('username', 'admin01')->get()->getRowArray();
         if ($existing !== null) {
