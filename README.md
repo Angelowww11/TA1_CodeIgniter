@@ -23,19 +23,6 @@ Requirements: PHP 8.2 or newer with GD, MySQLi, Intl, and mbstring, Composer, an
 
 The included SQL export contains local assessment data. Its `admin01` account uses the sample password `SimplePOS!2026`; change it through Staff before using this database beyond local assessment. Hosted initialization reads the password from `POS_ADMIN_PASSWORD` and stores only its hash.
 
-## Screenshots
-
-| Page | Evidence |
-| --- | --- |
-| Login | [View](evidence/screenshots/midterm-login-current.png) |
-| Overview | [View](evidence/screenshots/midterm-dashboard-current.png) |
-| Products | [View](evidence/screenshots/midterm-products-current.png) |
-| Record sale | [View](evidence/screenshots/midterm-record-sale.png) |
-| Insufficient stock validation | [View](evidence/screenshots/midterm-insufficient-stock.png) |
-| Sales history | [View](evidence/screenshots/midterm-sales-history.png) |
-| Customers | [View](evidence/screenshots/midterm-customers.png) |
-| Staff | [View](evidence/screenshots/midterm-staff.png) |
-
 ## Hosting
 
 The production deployment runs on Vercel with PostgreSQL from the Neon Marketplace integration. See [HOSTING.md](HOSTING.md) for setup and environment variables.
@@ -52,4 +39,4 @@ The demonstration catalog uses free photographs: [ceramic mug by NordWood Themes
 - Repository: https://github.com/Angelowww11/TA1_CodeIgniter
 - Hosted link: https://simplepos-midterm.vercel.app
 
-See [HOSTING.md](HOSTING.md) for the deployment configuration. Assessment documents are kept in `submission/` locally and excluded from GitHub.
+See [HOSTING.md](HOSTING.md) for the deployment configuration. Assessment documents and their embedded screenshots are kept locally in `submission/`; standalone screenshots are excluded from GitHub.

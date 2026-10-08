@@ -128,5 +128,9 @@ _modules/*
 # Keep assessment submission documents local, not in the GitHub repository.
 /submission/
 
+# Assessment screenshots are embedded in the local submission document.
+/evidence/
+/.docx-review/
+
 .vercel
 .env*
