@@ -2,6 +2,7 @@
 
 namespace App\Database\Seeds;
 
+use App\Libraries\MediaStore;
 use CodeIgniter\Database\Seeder;
 
 class ProductCatalogSeeder extends Seeder
@@ -17,6 +18,13 @@ class ProductCatalogSeeder extends Seeder
         foreach ($products as $product) {
             if (! $this->db->table('products')->where('sku', $product['sku'])->countAllResults()) {
                 $this->db->table('products')->insert($product);
+            }
+        }
+
+        if (MediaStore::usesDatabase()) {
+            $demoImage = FCPATH . 'uploads/products/demo-ceramic-mug.jpg';
+            if (is_file($demoImage) && MediaStore::find('demo-ceramic-mug.jpg') === null) {
+                MediaStore::save('demo-ceramic-mug.jpg', $demoImage);
             }
         }
     }

@@ -101,6 +101,15 @@ class Session extends BaseConfig
      */
     public ?string $DBGroup = null;
 
+    public function __construct()
+    {
+        parent::__construct();
+        if (getenv('VERCEL')) {
+            $this->driver = \App\Libraries\PostgresTextSessionHandler::class;
+            $this->savePath = 'ci_sessions';
+        }
+    }
+
     /**
      * --------------------------------------------------------------------------
      * Lock Retry Interval (microseconds)

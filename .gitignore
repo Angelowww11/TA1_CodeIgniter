@@ -127,3 +127,6 @@ _modules/*
 
 # Keep assessment submission documents local, not in the GitHub repository.
 /submission/
+
+.vercel
+.env*

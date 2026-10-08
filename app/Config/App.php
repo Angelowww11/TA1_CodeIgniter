@@ -203,7 +203,8 @@ class App extends BaseConfig
     public function __construct()
     {
         parent::__construct();
-        if ($url = getenv('APP_BASE_URL')) {
+        $url = getenv('APP_BASE_URL') ?: (getenv('VERCEL_URL') ? 'https://' . getenv('VERCEL_URL') : '');
+        if ($url) {
             $this->baseURL = rtrim($url, '/') . '/';
         }
     }

@@ -7,6 +7,7 @@ $routes->setAutoRoute(false);
 $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::authenticate');
 $routes->post('logout', 'Auth::logout');
+$routes->get('media/(:segment)', 'Media::show/$1');
 $routes->group('', ['filter' => 'auth'], static function ($routes) {
     $routes->get('/', 'Dashboard::index');
     $routes->get('products', 'Products::index');

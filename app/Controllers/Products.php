@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
+use App\Libraries\MediaStore;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Throwable;
 
@@ -81,11 +82,11 @@ class Products extends BaseController
         try {
             $id === null ? $model->insert($data) : $model->update($id, $data);
         } catch (Throwable $e) {
-            if ($image !== null) @unlink(FCPATH . 'uploads/products/' . $image);
+            if ($image !== null) $this->deleteImage($image);
             throw $e;
         }
         if ($image !== null && ! empty($existing['image'])) {
-            @unlink(FCPATH . 'uploads/products/' . basename($existing['image']));
+            $this->deleteImage(basename($existing['image']));
         }
         return redirect()->to(site_url('products'))->with('message', $id === null ? 'Product added.' : 'Product updated.');
     }
@@ -103,14 +104,30 @@ class Products extends BaseController
         if ($file->getSize() > 2 * 1024 * 1024) return 'Choose an image smaller than 2 MB.';
         if (! in_array($file->getMimeType(), ['image/jpeg', 'image/png'], true)) return 'Choose a JPG or PNG image.';
         $filename = bin2hex(random_bytes(16)) . '.jpg';
-        $directory = FCPATH . 'uploads/products';
+        $databaseStorage = MediaStore::usesDatabase();
+        $directory = $databaseStorage ? sys_get_temp_dir() : FCPATH . 'uploads/products';
         if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) return 'The image folder is not writable.';
+        $path = $directory . DIRECTORY_SEPARATOR . $filename;
         try {
-            service('image', 'gd')->withFile($file->getTempName())->fit(800, 600, 'center')->convert(IMAGETYPE_JPEG)->save($directory . DIRECTORY_SEPARATOR . $filename, 82);
+            service('image', 'gd')->withFile($file->getTempName())->fit(800, 600, 'center')->convert(IMAGETYPE_JPEG)->save($path, 82);
+            if ($databaseStorage) {
+                MediaStore::save($filename, $path);
+                @unlink($path);
+            }
         } catch (Throwable $e) {
+            @unlink($path);
             log_message('error', 'Product image preparation failed: {message}', ['message' => $e->getMessage()]);
             return 'The image could not be prepared. Choose another JPG or PNG image.';
         }
         return null;
+    }
+
+    private function deleteImage(string $filename): void
+    {
+        if (MediaStore::usesDatabase()) {
+            MediaStore::delete($filename);
+            return;
+        }
+        @unlink(FCPATH . 'uploads/products/' . $filename);
     }
 }

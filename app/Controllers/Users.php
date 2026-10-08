@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Libraries\MediaStore;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Throwable;
 
@@ -30,7 +31,12 @@ class Users extends BaseController
         [$first, $last] = $this->splitName($input['full_name']);
         $data = ['username' => $input['username'], 'first_name' => $first, 'last_name' => $last, 'email' => $input['email'], 'password_hash' => password_hash($input['password'], PASSWORD_DEFAULT), 'role' => $input['role'], 'account_status' => $input['account_status']];
         if ($newAvatar !== null) $data['avatar'] = $newAvatar;
-        (new UserModel())->insert($data);
+        try {
+            (new UserModel())->insert($data);
+        } catch (Throwable $e) {
+            if ($newAvatar !== null) $this->deleteAvatar($newAvatar);
+            throw $e;
+        }
         return redirect()->to(site_url('users'))->with('message', 'User account created.');
     }
 
@@ -64,14 +70,14 @@ class Users extends BaseController
         if ($newAvatar !== null) $data['avatar'] = $newAvatar;
         try {
             if (! $model->update($id, $data)) {
-                if ($newAvatar !== null) @unlink(FCPATH . 'uploads/avatars/' . $newAvatar);
+                if ($newAvatar !== null) $this->deleteAvatar($newAvatar);
                 return view('users/form', ['title' => 'Edit User', 'user' => array_merge($existing, $input), 'errors' => ['form' => 'The account could not be updated. Check that the username and email are not already in use.'], 'action' => site_url('users/update/' . $id), 'editing' => true]);
             }
         } catch (Throwable $e) {
-            if ($newAvatar !== null) @unlink(FCPATH . 'uploads/avatars/' . $newAvatar);
+            if ($newAvatar !== null) $this->deleteAvatar($newAvatar);
             throw $e;
         }
-        if ($newAvatar !== null && ! empty($existing['avatar'])) @unlink(FCPATH . 'uploads/avatars/' . basename($existing['avatar']));
+        if ($newAvatar !== null && ! empty($existing['avatar'])) $this->deleteAvatar(basename($existing['avatar']));
         return redirect()->to(site_url('users'))->with('message', 'User account updated.');
     }
 
@@ -83,7 +89,7 @@ class Users extends BaseController
         if ((int) session('auth_user_id') === $id) return redirect()->to(site_url('users'))->with('error', 'You cannot delete your own account.');
         if (db_connect()->table('sales')->where('sold_by', $id)->countAllResults() > 0) return redirect()->to(site_url('users'))->with('error', 'This staff member has sales history and cannot be deleted.');
         $model->delete($id);
-        if (! empty($user['avatar'])) @unlink(FCPATH . 'uploads/avatars/' . basename($user['avatar']));
+        if (! empty($user['avatar'])) $this->deleteAvatar(basename($user['avatar']));
         return redirect()->to(site_url('users'))->with('message', 'Staff account deleted.');
     }
 
@@ -110,14 +116,30 @@ class Users extends BaseController
         if (! in_array($file->getMimeType(), ['image/jpeg', 'image/png'], true)) return 'Upload a valid JPG or PNG image.';
 
         $filename = bin2hex(random_bytes(16)) . '.jpg';
-        $directory = FCPATH . 'uploads/avatars';
+        $databaseStorage = MediaStore::usesDatabase();
+        $directory = $databaseStorage ? sys_get_temp_dir() : FCPATH . 'uploads/avatars';
         if (! is_dir($directory) && ! mkdir($directory, 0755, true) && ! is_dir($directory)) return 'The avatar folder is not writable.';
+        $path = $directory . DIRECTORY_SEPARATOR . $filename;
         try {
-            service('image', 'gd')->withFile($file->getTempName())->fit(320, 320, 'center')->convert(IMAGETYPE_JPEG)->save($directory . DIRECTORY_SEPARATOR . $filename, 82);
+            service('image', 'gd')->withFile($file->getTempName())->fit(320, 320, 'center')->convert(IMAGETYPE_JPEG)->save($path, 82);
+            if ($databaseStorage) {
+                MediaStore::save($filename, $path);
+                @unlink($path);
+            }
         } catch (Throwable $e) {
+            @unlink($path);
             log_message('error', 'Avatar preparation failed: {message}', ['message' => $e->getMessage()]);
             return 'The image could not be prepared. Check that PHP GD is enabled and upload a valid image.';
         }
         return null;
+    }
+
+    private function deleteAvatar(string $filename): void
+    {
+        if (MediaStore::usesDatabase()) {
+            MediaStore::delete($filename);
+            return;
+        }
+        @unlink(FCPATH . 'uploads/avatars/' . $filename);
     }
 }

@@ -9,6 +9,7 @@
 </head>
 <body>
     <a class="skip-link" href="#content">Skip to content</a>
+    <canvas class="ambient-particles" id="ambient-particles" aria-hidden="true"></canvas>
     <header class="site-header">
         <div class="container nav-wrap">
             <a class="brand" href="<?= site_url('/') ?>" aria-label="SimplePOS overview"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>simple<span class="brand-accent">pos</span><small>STORE WORKSPACE</small></span></a>

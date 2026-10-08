@@ -1,12 +1,19 @@
-# Deploying SimplePOS on Railway
+# Deploying SimplePOS on Vercel
 
-This CodeIgniter application needs a persistent PHP service and a MySQL database. The repository includes a Dockerfile and a Railway startup script. Vercel is not used for this PHP application.
+SimplePOS runs on Vercel through the community PHP runtime and uses PostgreSQL from the Neon Marketplace integration. The app keeps sessions and uploaded product/staff images in PostgreSQL because Vercel function files are temporary between invocations.
 
-1. Create a Railway project with a MySQL service and connect the GitHub repository as an application service. Railway detects the root Dockerfile.
-2. Add application variables `MYSQLHOST`, `MYSQLPORT`, `MYSQLUSER`, `MYSQLPASSWORD`, and `MYSQLDATABASE`, each referencing the corresponding MySQL service variable. Add `POS_ADMIN_PASSWORD` with a private value of at least 12 characters and `CI_ENVIRONMENT=production`.
-3. Generate a public domain for the application service and set `APP_BASE_URL` to its HTTPS URL. The app adds the trailing slash. Set `app.forceGlobalSecureRequests=true` after HTTPS is available.
-4. Deploy. The startup script waits for MySQL, runs migrations, creates an initial admin only if the staff table is empty, and seeds a small product catalog. Login as `admin01` using the private value of `POS_ADMIN_PASSWORD`.
-5. Mount a Railway volume for `/var/www/html/public/uploads` so uploaded product images and staff avatars remain available after redeploys. Keep the application's `writable` directory writable for sessions, cache, and logs; consider a volume for sessions if running more than one replica.
-6. Open the public site and verify login, products, image upload, customers, staff, sale recording, stock reduction, and sales history. Add the verified HTTPS URL to README and the final assessment document.
+## Prepare the project
 
-The SQL export is for local review. The hosted service uses migrations and seeders so it does not import the sample passwords. Never put `.env`, Railway secrets, or the assessment submission document in Git.
+1. Create a Neon PostgreSQL database through Vercel Marketplace and connect it to the Vercel project for Production, Preview, and Development. The project reads `DATABASE_URL`.
+2. Add `POS_ADMIN_PASSWORD` as a private environment variable in Vercel. Use at least 12 characters. The first deployment creates `admin01` only if the staff table is empty; login with this account and password.
+3. Set `APP_BASE_URL` to the assigned HTTPS domain, including the trailing slash, such as `https://your-project.vercel.app/`.
+4. Deploy the repository's `main` branch. The Composer `vercel` build script runs migrations and seeds the initial admin and catalog. Vercel routes requests through `api/index.php` to CodeIgniter.
+5. After deployment, verify login, products and image upload, customers, staff, sales, stock updates, and sales history. Check the Vercel deployment logs if database migration or build initialization fails.
+
+## Notes
+
+- The Neon connection URL must be available as `DATABASE_URL`; keep it private and do not commit it.
+- The app enables secure cookies on Vercel and stores sessions in the `ci_sessions` table.
+- Product images and staff avatars are stored in PostgreSQL in the `uploaded_media` table. Image data is kept in the database so it persists across deployments.
+- The GitHub repository excludes `.env` files, Vercel project metadata, writable data, and assessment documents.
+- Vercel provides PHP through a community runtime. Confirm its current runtime and function limits when changing deployment settings.

@@ -194,6 +194,26 @@ class Database extends Config
     {
         parent::__construct();
 
+        $databaseUrl = getenv('DATABASE_URL');
+        if ($databaseUrl) {
+            $parts = parse_url($databaseUrl);
+            if ($parts !== false) {
+                parse_str($parts['query'] ?? '', $query);
+                $this->default['hostname'] = $parts['host'] ?? '';
+                $this->default['username'] = rawurldecode($parts['user'] ?? '');
+                $this->default['password'] = rawurldecode($parts['pass'] ?? '');
+                $this->default['database'] = ltrim($parts['path'] ?? '', '/');
+                $this->default['port'] = (int) ($parts['port'] ?? 5432);
+                $this->default['DBDriver'] = 'Postgre';
+                $this->default['charset'] = 'utf8';
+                $this->default['schema'] = 'public';
+                $this->default['sslmode'] = $query['sslmode'] ?? 'require';
+                if (preg_match('/^(ep-[^.]+)/', $parts['host'] ?? '', $endpoint)) {
+                    $this->default['options'] = 'endpoint=' . $endpoint[1];
+                }
+            }
+        }
+
         if (getenv('MYSQLHOST')) {
             $this->default['hostname'] = getenv('MYSQLHOST');
             $this->default['username'] = getenv('MYSQLUSER') ?: '';

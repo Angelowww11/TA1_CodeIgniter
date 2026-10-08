@@ -1,6 +1,6 @@
 # SimplePOS Midterm Project
 
-A CodeIgniter 4 point of sale application for a small store. Staff can sign in, manage products, customers, and staff accounts, record sales, and review sales history. The interface uses a calm blue palette, subtle motion, responsive cards, and an overview dashboard.
+A CodeIgniter 4 point of sale application for a small store. Staff can sign in, manage products, customers, and staff accounts, record sales, and review sales history. The interface uses a warm charcoal, cream, copper, and sage palette with responsive layouts, subtle motion, and an overview dashboard.
 
 ## Features
 
@@ -36,12 +36,16 @@ The included SQL export contains local assessment data. Its `admin01` account us
 | Customers | [View](evidence/screenshots/midterm-customers.png) |
 | Staff | [View](evidence/screenshots/midterm-staff.png) |
 
+## Hosting
+
+The production deployment is configured for Vercel with PostgreSQL from the Neon Marketplace integration. See [HOSTING.md](HOSTING.md) for setup and environment variables. Public deployment is pending database integration setup.
+
 ## Project details
 
 - Student: Angelo Kacey N. Pineda
 - Section: TW33
 - Course: IT0049 Web System Technologies
 - Repository: https://github.com/Angelowww11/TA1_CodeIgniter
-- Hosted link: pending deployment
+- Hosted link: https://simplepos-midterm.vercel.app
 
 See [HOSTING.md](HOSTING.md) for the deployment configuration. Assessment documents are kept in `submission/` locally and excluded from GitHub.

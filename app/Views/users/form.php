@@ -10,7 +10,7 @@
 <label>Role<select name="role"><option value="">Choose a role</option><?php foreach (['Admin', 'Manager', 'Cashier'] as $role): ?><option value="<?= esc($role, 'attr') ?>" <?= old('role', $user['role'] ?? '') === $role ? 'selected' : '' ?>><?= esc($role) ?></option><?php endforeach ?></select></label>
 <label>Status<select name="account_status"><option value="Active" <?= old('account_status', $user['account_status'] ?? 'Active') === 'Active' ? 'selected' : '' ?>>Active</option><option value="Inactive" <?= old('account_status', $user['account_status'] ?? '') === 'Inactive' ? 'selected' : '' ?>>Inactive</option></select></label>
 <label><span>Profile picture <span class="optional">optional</span></span><input type="file" name="avatar" accept="image/jpeg,image/png"><small>JPG or PNG up to 2 MB, prepared as a 320 × 320 thumbnail.</small></label>
-<?php if (! empty($user['avatar'])): ?><img class="avatar-preview" src="<?= base_url('uploads/avatars/' . rawurlencode(basename($user['avatar']))) ?>" alt="Current profile picture"><?php endif ?>
+<?php if (! empty($user['avatar'])): ?><img class="avatar-preview" src="<?= site_url('media/' . rawurlencode(basename($user['avatar']))) ?>" alt="Current profile picture"><?php endif ?>
 <div class="form-actions"><button class="button" type="submit">Save user</button><a href="<?= site_url('users') ?>">Cancel</a></div>
 </form>
 </div>

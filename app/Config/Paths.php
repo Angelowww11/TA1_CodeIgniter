@@ -55,6 +55,13 @@ class Paths
      */
     public string $writableDirectory = __DIR__ . '/../../writable';
 
+    public function __construct()
+    {
+        if (getenv('VERCEL')) {
+            $this->writableDirectory = sys_get_temp_dir() . '/simplepos-writable';
+        }
+    }
+
     /**
      * ---------------------------------------------------------------
      * TESTS DIRECTORY NAME

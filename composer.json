@@ -38,6 +38,12 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "vercel": [
+            "@php scripts/prepare-vercel.php",
+            "@php spark migrate --all",
+            "@php spark db:seed HostedAdminSeeder",
+            "@php spark db:seed ProductCatalogSeeder"
+        ]
     }
 }

@@ -4,7 +4,7 @@
 <?php if ($products): ?><div class="product-grid rise-in">
 <?php foreach ($products as $product): ?><article class="product-card <?= $product['is_archived'] ? 'is-archived' : '' ?>">
     <div class="product-art">
-        <?php if ($product['image']): ?><img src="<?= base_url('uploads/products/' . rawurlencode(basename($product['image']))) ?>" alt="<?= esc($product['name'], 'attr') ?>" loading="lazy"><?php else: ?><span class="product-placeholder" aria-hidden="true"><span></span><span></span><span></span><span></span></span><?php endif ?>
+        <?php if ($product['image']): ?><img src="<?= site_url('media/' . rawurlencode(basename($product['image']))) ?>" alt="<?= esc($product['name'], 'attr') ?>" loading="lazy"><?php else: ?><span class="product-placeholder" aria-hidden="true"><span></span><span></span><span></span><span></span></span><?php endif ?>
         <?php if ($product['is_archived']): ?><span class="art-tag">Archived</span><?php elseif ((int) $product['stock_quantity'] <= 5): ?><span class="art-tag alert">Low stock</span><?php endif ?>
     </div>
     <div class="product-content"><span class="sku-label"><?= esc($product['sku']) ?></span><h2><?= esc($product['name']) ?></h2><div class="product-meta"><strong>₱<?= number_format((float) $product['price'], 2) ?></strong><span><?= esc($product['stock_quantity']) ?> in stock</span></div>

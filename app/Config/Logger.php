@@ -5,6 +5,7 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Log\Handlers\FileHandler;
 use CodeIgniter\Log\Handlers\HandlerInterface;
+use CodeIgniter\Log\Handlers\ErrorlogHandler;
 
 class Logger extends BaseConfig
 {
@@ -148,4 +149,15 @@ class Logger extends BaseConfig
         //     'messageType' => 0,
         // ],
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+        if (getenv('VERCEL')) {
+            $this->handlers[ErrorlogHandler::class] = [
+                'handles' => ['critical', 'alert', 'emergency', 'error'],
+                'messageType' => ErrorlogHandler::TYPE_SAPI,
+            ];
+        }
+    }
 }

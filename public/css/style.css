@@ -12,3 +12,41 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:var(--display);letter-spacing:-.045
 @media(max-width:700px){.container{width:min(100% - 28px,1180px)}.site-main{padding-block:26px 58px}.nav-wrap{min-height:0}.site-nav{gap:2px}.site-nav a{padding:8px 9px;font-size:.8rem}.account-name{display:none}.dashboard-hero{grid-template-columns:1fr;padding:34px 27px;gap:30px}.dashboard-hero h1{font-size:3.2rem}.receipt-preview{justify-self:start;transform:rotate(1deg)}.metric-grid,.product-grid{grid-template-columns:1fr}.page-heading,.section-heading{align-items:start;flex-direction:column}.page-heading{margin-top:8px}.page-heading h1{font-size:3rem}.form-shell{padding:25px 20px}.form-grid{grid-template-columns:1fr}.footer-inner{gap:12px;flex-wrap:wrap}th,td{padding:13px 14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+/* Warm ledger identity with a quiet animated particle field. */
+:root{--navy:#202a28;--navy-2:#34423d;--blue:#a9643e;--blue-dark:#874c31;--sky:#eee5d8;--gold:#d3ad78;--ink:#272c29;--muted:#6f746d;--line:#dedbd2;--bg:#f4f2eb;--surface:#fffefa;--display:Georgia,'Times New Roman',serif;--body:'Segoe UI',Tahoma,sans-serif}
+body{position:relative;background:linear-gradient(135deg,#f6f4ee,#f0f2ec 52%,#f5eee5);isolation:isolate}
+body:before{content:'';position:fixed;z-index:-1;inset:-30%;pointer-events:none;background:radial-gradient(ellipse at 20% 22%,rgba(202,172,130,.16),transparent 35%),radial-gradient(ellipse at 82% 40%,rgba(154,174,157,.18),transparent 33%),radial-gradient(ellipse at 48% 92%,rgba(195,131,91,.09),transparent 31%);animation:ledger-drift 32s ease-in-out infinite alternate}
+.ambient-particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+.site-header,.site-main,.site-footer{position:relative;z-index:1}
+.site-header{background:rgba(32,42,40,.97);box-shadow:0 8px 30px rgba(31,38,32,.12)}
+.brand-accent{color:#ddb38d}.brand-icon i:first-child{background:#d8a880}.brand-icon i:nth-child(2){background:#a9b9a7}.brand-icon i:nth-child(3){background:#f4eee3}.brand-icon i:nth-child(4){background:#bb7651}
+.site-nav a:hover,.site-nav a[aria-current=page]{background:rgba(255,255,255,.12)}
+.account-dot{background:#a6c6a8;box-shadow:0 0 0 4px rgba(166,198,168,.12)}
+.dashboard-hero{background:linear-gradient(122deg,#27322f 0%,#34423d 64%,#5a5346 100%);box-shadow:0 22px 52px rgba(42,47,39,.2)}
+.dashboard-hero:before{border-color:rgba(231,207,174,.15);box-shadow:0 0 0 90px rgba(231,207,174,.035),0 0 0 180px rgba(231,207,174,.025)}
+.dashboard-hero h1 em{color:#dfb894}
+.receipt-preview{background:#fffdf8}
+.metric-card{background:rgba(255,254,250,.92);backdrop-filter:blur(8px)}
+.table-wrap,.product-card,.form-shell,.login-panel{background:rgba(255,254,250,.95);backdrop-filter:blur(8px)}
+.product-card:nth-child(2) .product-art{background:linear-gradient(150deg,#ede9df,#e6e2d7)}
+.product-card:nth-child(3) .product-art{background:linear-gradient(150deg,#e8eee6,#dce7db)}
+.product-card:nth-child(4) .product-art{background:linear-gradient(150deg,#f1e7db,#e9e4d9)}
+.product-art{background:linear-gradient(150deg,#eee6dc,#f5f1e8)}
+.site-footer{border-color:rgba(128,125,111,.24)}
+.button{border-color:#a9643e;background:#a9643e;box-shadow:0 6px 16px rgba(127,76,49,.16)}
+.button:hover{background:#874c31;box-shadow:0 10px 21px rgba(127,76,49,.23)}
+.button-light{border-color:#fffefa;background:#fffefa;color:#27322f}
+.button-light:hover{background:#f0e7da;color:#27322f}
+.button-outline-light{border-color:rgba(255,255,255,.45);background:transparent;color:#fff}
+.eyebrow{color:#874c31}.eyebrow.light{color:#dfb894}
+.text-link,.table-actions a,.table-actions button,.product-actions a,.product-actions button{color:#874c31}
+.table-actions button,.product-actions button{color:#9b5148}
+.metric-label,.id-cell,.sku-label,code{color:#874c31}
+.metric-card>span:last-child span,.footer-inner span span{color:#a9643e}
+.record-form input:focus,.record-form select:focus,.record-form textarea:focus{border-color:#a9643e;box-shadow:0 0 0 3px rgba(222,190,160,.34)}
+.sale-estimate{background:#f0eee5;border-color:#dfd9cb}
+.sale-estimate span{color:#59645a}
+.sale-estimate strong{color:#874c31}
+@keyframes ledger-drift{from{transform:translate3d(-1.2%,.5%,0) rotate(-2deg) scale(1)}to{transform:translate3d(1.5%,-.7%,0) rotate(2deg) scale(1.04)}}
+@media(prefers-reduced-motion:reduce){body:before{animation:none}.ambient-particles{display:none}}
+
