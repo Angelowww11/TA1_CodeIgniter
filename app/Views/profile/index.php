@@ -2,7 +2,7 @@
 
 <section class="page-heading" aria-labelledby="profile-title">
     <p class="eyebrow">Demo account</p><h1 id="profile-title">Profile</h1>
-    <p>The single user record stored in the users table and retrieved through UserModel.</p>
+    <p>The demo user profile stored in the task system.</p>
 </section>
 
 <section>

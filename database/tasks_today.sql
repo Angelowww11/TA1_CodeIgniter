@@ -12,7 +12,8 @@ CREATE TABLE tasks (
     title VARCHAR(150) NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'pending',
     task_date DATE NOT NULL,
-    created_at DATETIME NOT NULL
+    created_at DATETIME NOT NULL,
+    is_archived BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE users (
@@ -20,7 +21,8 @@ CREATE TABLE users (
     username VARCHAR(50) NOT NULL UNIQUE,
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    created_at DATETIME NOT NULL
+    created_at DATETIME NOT NULL,
+    password_hash VARCHAR(255) NULL
 );
 
 INSERT INTO tasks (title, status, task_date, created_at) VALUES

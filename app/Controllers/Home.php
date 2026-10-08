@@ -10,6 +10,7 @@ class Home extends BaseController
     {
         $today = date('Y-m-d');
         $tasks = (new TaskModel())
+            ->where('is_archived', false)
             ->where('task_date', $today)
             ->orderBy('id', 'ASC')
             ->findAll();

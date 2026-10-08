@@ -1,0 +1,4 @@
+<?= view('partials/app_header', ['title' => $title]) ?>
+<section class="page-heading"><p class="eyebrow">About the system</p><h1>Plan the day with clarity</h1><p>Tasks for Today displays the schedule for everyone while giving the demo user secure controls to manage it.</p></section>
+<section class="card-grid"><article class="card"><span class="card-number">01 / PUBLIC</span><h2>Browse tasks</h2><p>Today's schedule and the complete active list are available without an account.</p></article><article class="card"><span class="card-number">02 / MANAGE</span><h2>Make changes</h2><p>Sign in to add tasks, revise their dates or status, and archive finished records.</p></article><article class="card"><span class="card-number">03 / SAFE</span><h2>Keep history</h2><p>Archived tasks stay in the database but disappear from the public pages.</p></article></section>
+<?= view('partials/app_footer') ?>

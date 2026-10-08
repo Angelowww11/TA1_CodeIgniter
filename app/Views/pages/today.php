@@ -9,7 +9,7 @@ $completedCount = count(array_filter($tasks, static fn (array $task): bool => $t
     <p class="eyebrow">Daily focus &middot; <?= esc(date('F j, Y', strtotime($today))) ?></p>
     <h1 id="today-title">Tasks for Today</h1>
     <p>See what is scheduled for <?= esc(date('l, F j', strtotime($today))) ?>. Today's tasks are selected directly from the database.</p>
-    <div class="actions"><a class="button" href="<?= site_url('tasks') ?>">View all tasks</a><a class="button secondary" href="<?= site_url('about') ?>">About this system</a></div>
+    <div class="actions"><a class="button" href="<?= site_url('tasks') ?>">View all tasks</a><a class="button secondary" href="<?= site_url('tasks/about') ?>">About this system</a></div>
 </section>
 <section class="card-grid summary-grid" aria-label="Today's task summary">
     <article class="card"><span class="card-number">01 / TOTAL</span><h2><?= count($tasks) ?> tasks</h2><p>Scheduled for today</p></article>

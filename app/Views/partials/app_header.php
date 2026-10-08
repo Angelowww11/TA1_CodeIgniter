@@ -9,18 +9,24 @@ $isActive = static fn (string $route): string => $path === $route ? ' aria-curre
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tasks for Today management dashboard built with CodeIgniter 4.">
     <title><?= esc($title) ?> | Tasks for Today</title>
-    <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/tasks.css') ?>">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
         <div class="container nav-wrap">
-            <a class="brand" href="<?= site_url('/') ?>">Tasks for Today</a>
+            <a class="brand" href="<?= site_url('today') ?>">Tasks for Today</a>
             <nav aria-label="Main navigation">
-                <a href="<?= site_url('/') ?>"<?= $isActive('') ?>>Today</a>
+                <a href="<?= site_url('today') ?>"<?= $isActive('today') ?>>Today</a>
                 <a href="<?= site_url('tasks') ?>"<?= $isActive('tasks') ?>>All Tasks</a>
-                <a href="<?= site_url('profile') ?>"<?= $isActive('profile') ?>>Profile</a>
-                <a href="<?= site_url('about') ?>"<?= $isActive('about') ?>>About</a>
+                <a href="<?= site_url('tasks/profile') ?>"<?= $isActive('tasks/profile') ?>>Profile</a>
+                <a href="<?= site_url('tasks/about') ?>"<?= $isActive('tasks/about') ?>>About</a>
+                <?php if (session()->get('task_user_id')): ?>
+                    <a href="<?= site_url('tasks/new') ?>"<?= $isActive('tasks/new') ?>>New Task</a>
+                    <form method="post" action="<?= site_url('tasks/logout') ?>"><?= csrf_field() ?><button type="submit">Sign out</button></form>
+                <?php else: ?>
+                    <a href="<?= site_url('tasks/login') ?>"<?= $isActive('tasks/login') ?>>Sign in</a>
+                <?php endif ?>
             </nav>
         </div>
     </header>
