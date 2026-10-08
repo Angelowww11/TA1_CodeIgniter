@@ -24,6 +24,7 @@
                     <a href="<?= site_url('customers') ?>" <?= str_starts_with(uri_string(), 'customers') ? 'aria-current="page"' : '' ?>>Customers</a>
                     <a href="<?= site_url('users') ?>" <?= str_starts_with(uri_string(), 'users') ? 'aria-current="page"' : '' ?>>Staff</a>
                 <?php endif ?>
+                <a class="activity-link" href="<?= site_url('today') ?>">TSA2 Tasks <span aria-hidden="true">↗</span></a>
             </nav>
             <div class="nav-account">
                 <?php if (session()->get('auth_user_id')): ?>

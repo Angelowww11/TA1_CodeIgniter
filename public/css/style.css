@@ -130,4 +130,5 @@ th{background:#edf3ed;color:#587465}.id-cell,.sku-label,.text-link{color:#a4533e
 .login-story-copy{padding-top:355px}
 @media(max-width:700px){.login-story-photos{top:45px;height:135px}.login-story-photos img:first-child{height:100%;width:31%;right:6%}.login-story-photos img:last-child{height:88%;width:25%;left:42%}.login-story-copy{padding-top:120px}.login-story-copy h2{max-width:70%;font-size:1.9rem}}
 .product-card--tote .product-art img{object-position:center 68%}
+.site-nav .activity-link{margin-left:12px;border:1px solid #8ebaa1;background:#ffffff12;color:#fff;white-space:nowrap}
 

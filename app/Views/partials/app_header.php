@@ -27,6 +27,7 @@ $isActive = static fn (string $route): string => $path === $route ? ' aria-curre
                 <?php else: ?>
                     <a href="<?= site_url('tasks/login') ?>"<?= $isActive('tasks/login') ?>>Sign in</a>
                 <?php endif ?>
+                <a class="activity-link" href="<?= site_url('/') ?>">Midterm POS <span aria-hidden="true">↗</span></a>
             </nav>
         </div>
     </header>

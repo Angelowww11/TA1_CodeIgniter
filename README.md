@@ -45,4 +45,6 @@ See [HOSTING.md](HOSTING.md) for the deployment configuration. Assessment docume
 
 The earlier Tasks for Today project is available alongside the POS site at `/today`. Its public pages are `/today`, `/tasks`, `/tasks/profile`, and `/tasks/about`. Sign in at `/tasks/login` to create, edit, and archive tasks. Archived rows stay in the database but are hidden from public lists. The task account and session are separate from POS staff access.
 
+The live site provides navigation between the midterm POS at `/` and TSA2 Tasks for Today at `/today`. Both activities remain on the same Vercel deployment.
+
 For a fresh MySQL setup, import `database/tasks_today.sql` into a separate database, set the connection for that database, set a private `TASK_DEMO_PASSWORD` of at least eight characters, then run `php spark db:seed TaskDemoPasswordSeeder`. Alternatively, run `php spark migrate --all`, `php spark db:seed TaskSystemSeeder`, and `php spark db:seed TaskDemoPasswordSeeder` against an empty database. The TSA2 migration adds `users.password_hash` and `tasks.is_archived` to an existing TSA1 database. Never commit the environment file or a plain text password.
