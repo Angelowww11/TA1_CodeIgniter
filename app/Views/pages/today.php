@@ -1,27 +1,28 @@
-<?= view('partials/app_header', ['title' => $title]) ?>
+<?= view('partials/header', ['title' => $title]) ?>
 
 <?php
 $openCount = count(array_filter($tasks, static fn (array $task): bool => $task['status'] !== 'completed'));
 $completedCount = count(array_filter($tasks, static fn (array $task): bool => $task['status'] === 'completed'));
 ?>
 
-<section class="hero" aria-labelledby="today-title">
-    <p class="eyebrow">Daily focus &middot; <?= esc(date('F j, Y', strtotime($today))) ?></p>
-    <h1 id="today-title">Tasks for Today</h1>
-    <p>See what is scheduled for <?= esc(date('l, F j', strtotime($today))) ?>. Today's tasks are selected directly from the database.</p>
-    <div class="actions"><a class="button" href="<?= site_url('tasks') ?>">View all tasks</a><a class="button secondary" href="<?= site_url('tasks/about') ?>">About this system</a></div>
+<section class="task-hero" aria-labelledby="today-title">
+    <div><p class="eyebrow">DAILY PLAN <span class="eyebrow-line"></span> <?= esc(date('F j, Y', strtotime($today))) ?></p>
+    <h1 id="today-title">Keep today<br><em>moving.</em></h1>
+    <p>Your daily plan, connected to the same store workspace. See what is scheduled and keep the team on track.</p>
+    <div class="actions"><a class="button" href="<?= site_url('tasks') ?>">View all tasks <span aria-hidden="true">↗</span></a><?php if (session()->get('auth_user_id')): ?><a class="button button-outline-light" href="<?= site_url('tasks/new') ?>">Add a task</a><?php endif ?></div></div>
+    <div class="task-hero-date" aria-hidden="true"><span><?= esc(date('M', strtotime($today))) ?></span><strong><?= esc(date('d', strtotime($today))) ?></strong><span><?= esc(date('l', strtotime($today))) ?></span></div>
 </section>
-<section class="card-grid summary-grid" aria-label="Today's task summary">
-    <article class="card"><span class="card-number">01 / TOTAL</span><h2><?= count($tasks) ?> tasks</h2><p>Scheduled for today</p></article>
-    <article class="card"><span class="card-number">02 / OPEN</span><h2><?= $openCount ?> open</h2><p>Pending or in progress</p></article>
-    <article class="card"><span class="card-number">03 / COMPLETED</span><h2><?= $completedCount ?> completed</h2><p>Finished today</p></article>
+<section class="metric-grid task-summary" aria-label="Today's task summary">
+    <article class="metric-card"><span class="metric-label">SCHEDULED TODAY</span><strong><?= count($tasks) ?></strong><span>tasks</span></article>
+    <article class="metric-card"><span class="metric-label">STILL OPEN</span><strong><?= $openCount ?></strong><span>pending or in progress</span></article>
+    <article class="metric-card"><span class="metric-label">FINISHED</span><strong><?= $completedCount ?></strong><span>completed today</span></article>
 </section>
 
 <section class="listing" aria-labelledby="today-list-title">
-    <h2 id="today-list-title">Today's task list</h2>
+    <div class="section-heading"><div><p class="eyebrow">ON THE BOARD</p><h2 id="today-list-title">Today's tasks</h2></div><a class="text-link" href="<?= site_url('tasks') ?>">Complete schedule <span aria-hidden="true">↗</span></a></div>
 
     <?php if ($tasks === []): ?>
-        <div class="card"><p>No tasks scheduled today. <a href="<?= site_url('tasks') ?>">Check the complete schedule</a>.</p></div>
+        <div class="empty-state"><strong>A clear board today</strong><p>No tasks are scheduled for this date. Browse the complete schedule or add the next task.</p><a class="button" href="<?= site_url('tasks') ?>">View all tasks</a></div>
     <?php else: ?>
         <div class="table-wrap"><table><thead><tr><th scope="col">No.</th><th scope="col">Task</th><th scope="col">Status</th></tr></thead><tbody>
             <?php foreach ($tasks as $index => $task): ?>
@@ -31,4 +32,4 @@ $completedCount = count(array_filter($tasks, static fn (array $task): bool => $t
     <?php endif ?>
 </section>
 
-<?= view('partials/app_footer') ?>
+<?= view('partials/footer') ?>

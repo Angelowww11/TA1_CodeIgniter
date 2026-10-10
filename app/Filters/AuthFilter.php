@@ -15,7 +15,7 @@ class AuthFilter implements FilterInterface
         $user = $id ? (new UserModel())->find($id) : null;
         if (! $user || $user['account_status'] !== 'Active') {
             session()->remove(['auth_user_id', 'auth_username']);
-            return redirect()->to(site_url('login'))->with('error', 'Please sign in to access customer and user accounts.');
+            return redirect()->to(site_url('login'))->with('error', 'Please sign in to manage the store.');
         }
     }
 

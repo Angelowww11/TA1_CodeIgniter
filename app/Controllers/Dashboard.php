@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ProductModel;
+use App\Models\TaskModel;
 
 class Dashboard extends BaseController
 {
@@ -16,6 +17,12 @@ class Dashboard extends BaseController
             ->join('user_accounts u', 'u.user_id = s.sold_by')
             ->orderBy('s.id', 'DESC')->limit(5)->get()->getResultArray();
 
+        $todayTasks = (new TaskModel())
+            ->where('is_archived', false)
+            ->where('task_date', date('Y-m-d'))
+            ->orderBy('id', 'ASC')
+            ->findAll();
+
         return view('dashboard/index', [
             'title' => 'Overview',
             'productCount' => $products->where('is_archived', 0)->countAllResults(),
@@ -23,6 +30,7 @@ class Dashboard extends BaseController
             'saleCount' => $db->table('sales')->countAllResults(),
             'salesTotal' => (string) (($db->table('sales')->selectSum('total_price')->get()->getRowArray()['total_price'] ?? '0') ?: '0'),
             'recent' => $recent,
+            'todayTasks' => $todayTasks,
         ]);
     }
 }

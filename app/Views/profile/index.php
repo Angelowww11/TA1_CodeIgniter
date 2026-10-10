@@ -1,4 +1,4 @@
-<?= view('partials/app_header', ['title' => $title]) ?>
+<?= view('partials/header', ['title' => $title]) ?>
 
 <section class="page-heading" aria-labelledby="profile-title">
     <p class="eyebrow">Demo account</p><h1 id="profile-title">Profile</h1>
@@ -23,4 +23,4 @@
     <?php endif ?>
 </section>
 
-<?= view('partials/app_footer') ?>
+<?= view('partials/footer') ?>

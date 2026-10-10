@@ -2,12 +2,8 @@
 <section class="login-layout">
     <div class="login-story" aria-label="SimplePOS store workspace">
         <div class="login-story-top"><span class="story-mark" aria-hidden="true">✳</span><span>THE EVERYDAY STORE</span></div>
-        <div class="login-story-photos" aria-hidden="true">
-            <img src="<?= base_url('uploads/products/catalog-ceramic-mug.jpg') ?>" alt="">
-            <img src="<?= base_url('uploads/products/catalog-notebook.jpg') ?>" alt="">
-        </div>
-        <div class="login-story-copy"><span class="story-kicker">A BETTER WAY TO RUN THE COUNTER</span><h2>Good days start<br>behind the scenes.</h2><p>Keep your products, people, and every sale in one thoughtful workspace.</p></div>
-        <div class="login-story-bottom"><span>INVENTORY</span><span>SALES</span><span>PEOPLE</span></div>
+        <div class="login-story-copy"><span class="story-kicker">A BETTER WAY TO RUN THE COUNTER</span><h2>Every detail,<br><em>in its place.</em></h2><p>Products, people, sales, and the day's work in one thoughtful workspace.</p></div>
+        <div class="login-story-bottom"><span>INVENTORY</span><span>SALES</span><span>DAILY PLAN</span></div>
     </div>
     <div class="login-panel">
         <p class="eyebrow">STAFF SIGN IN</p>
