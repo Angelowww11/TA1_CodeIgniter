@@ -31,16 +31,20 @@ $routes->group('', ['filter' => 'auth'], static function ($routes) {
     $routes->get('users/edit/(:num)', 'Users::edit/$1');
     $routes->post('users/update/(:num)', 'Users::update/$1');
     $routes->post('users/delete/(:num)', 'Users::delete/$1');
-    $routes->get('tasks/new', 'Tasks::new');
-    $routes->post('tasks', 'Tasks::create');
-    $routes->get('tasks/edit/(:num)', 'Tasks::edit/$1');
-    $routes->post('tasks/update/(:num)', 'Tasks::update/$1');
-    $routes->post('tasks/archive/(:num)', 'Tasks::archive/$1');
 });
 $routes->get('tasks', 'Tasks::index');
 $routes->get('today', 'Home::index');
 $routes->get('tasks/profile', 'TaskProfile::index');
 $routes->get('tasks/about', 'TaskPages::about');
-$routes->get('tasks/login', static fn () => redirect()->to(site_url('login')));
+$routes->get('tasks/login', 'TaskAuth::login');
+$routes->post('tasks/login', 'TaskAuth::authenticate');
+$routes->post('tasks/logout', 'TaskAuth::logout');
+$routes->group('tasks', ['filter' => 'taskauth'], static function ($routes) {
+    $routes->get('new', 'Tasks::new');
+    $routes->post('', 'Tasks::create');
+    $routes->get('edit/(:num)', 'Tasks::edit/$1');
+    $routes->post('update/(:num)', 'Tasks::update/$1');
+    $routes->post('archive/(:num)', 'Tasks::archive/$1');
+});
 $routes->get('profile', 'Profile::index');
 $routes->get('about', 'Pages::about');

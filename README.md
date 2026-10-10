@@ -41,10 +41,10 @@ The demonstration catalog uses free photographs: [ceramic mug by NordWood Themes
 
 See [HOSTING.md](HOSTING.md) for the deployment configuration. Assessment documents and their embedded screenshots are kept locally in `submission/`; standalone screenshots are excluded from GitHub.
 
-## Daily tasks
+## Tasks for Today TSA2
 
-Tasks for Today is part of the SimplePOS workspace. The dashboard previews today's plan; `/today` and `/tasks` provide public read-only views. Signed-in POS staff can create, edit, and archive tasks with the same staff session used for products, sales, customers, and users. Archived rows remain in the database and are excluded from the active lists.
+The earlier Tasks for Today project is available alongside the POS site at `/today`. Its public pages are `/today`, `/tasks`, `/tasks/profile`, and `/tasks/about`. Sign in at `/tasks/login` to create, edit, and archive tasks. Archived rows stay in the database but are hidden from public lists. The task account and session are separate from POS staff access.
 
-The database migrations create the task table and later add its archive flag. For an empty database, run `php spark migrate --all` and `php spark db:seed TaskSystemSeeder` to add task examples and the public demo profile. `database/tasks_today.sql` remains as a standalone export for the original task assessment. The store uses one Vercel deployment and one shared application navigation.
+The live site provides navigation between the midterm POS at `/` and TSA2 Tasks for Today at `/today`. Both activities remain on the same Vercel deployment.
 
-The interface uses original generated artwork at `public/images/forest-island.png`, with Cormorant Garamond for editorial headings, Manrope for controls, and IBM Plex Mono for labels. The source image prompt described a floating moss-covered stone island in warm daylight with empty space for dashboard text; the built-in image generation tool produced the asset.
+For a fresh MySQL setup, import `database/tasks_today.sql` into a separate database, set the connection for that database, set a private `TASK_DEMO_PASSWORD` of at least eight characters, then run `php spark db:seed TaskDemoPasswordSeeder`. Alternatively, run `php spark migrate --all`, `php spark db:seed TaskSystemSeeder`, and `php spark db:seed TaskDemoPasswordSeeder` against an empty database. The TSA2 migration adds `users.password_hash` and `tasks.is_archived` to an existing TSA1 database. Never commit the environment file or a plain text password.
