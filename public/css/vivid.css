@@ -258,3 +258,5 @@ code { color: #37592e; background: #e7eddf; }
 .login-story{animation:login-breathe 16s ease-in-out infinite alternate}
 @keyframes login-breathe{from{background-size:100% 100%,auto 112%}to{background-size:100% 100%,auto 122%}}
 @media(prefers-reduced-motion:reduce){.login-story{animation:none!important}}
+
+@media(max-width:700px){.site-nav{flex:0 0 100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;width:100%}.site-nav a{padding:10px 5px;font-size:.7rem;white-space:nowrap;text-align:center}.nav-wrap{gap:12px;min-height:0}.nav-account{padding-left:12px}}
