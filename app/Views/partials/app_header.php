@@ -10,6 +10,8 @@ $isActive = static fn (string $route): string => $path === $route ? ' aria-curre
     <meta name="description" content="Tasks for Today management dashboard built with CodeIgniter 4.">
     <title><?= esc($title) ?> | Tasks for Today</title>
     <link rel="stylesheet" href="<?= base_url('css/tasks.css') ?>?v=<?= substr(md5_file(FCPATH . 'css/tasks.css'), 0, 12) ?>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url('css/tasks-nature.css') ?>">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>

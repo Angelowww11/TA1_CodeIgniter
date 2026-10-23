@@ -48,3 +48,7 @@ The earlier Tasks for Today project is available alongside the POS site at `/tod
 The live site provides navigation between the midterm POS at `/` and TSA2 Tasks for Today at `/today`. Both activities remain on the same Vercel deployment.
 
 For a fresh MySQL setup, import `database/tasks_today.sql` into a separate database, set the connection for that database, set a private `TASK_DEMO_PASSWORD` of at least eight characters, then run `php spark db:seed TaskDemoPasswordSeeder`. Alternatively, run `php spark migrate --all`, `php spark db:seed TaskSystemSeeder`, and `php spark db:seed TaskDemoPasswordSeeder` against an empty database. The TSA2 migration adds `users.password_hash` and `tasks.is_archived` to an existing TSA1 database. Never commit the environment file or a plain text password.
+
+## Visual design
+
+Botanical editorial styling inspired by [Vivid Website by BL/S](https://dribbble.com/shots/27544505-Vivid-Website), with original generated landscape artwork, Cormorant Garamond headings and Manrope text. Motion includes drifting artwork, pointer parallax, circular line rotation, and gentle section entrances. Pause motion saves the preference; reduced motion settings are respected. Existing application behavior and data sources are preserved.

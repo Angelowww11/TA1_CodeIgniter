@@ -7,12 +7,13 @@
     <title><?= esc($title) ?> | SimplePOS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('css/style.css') ?>?v=<?= substr(md5_file(FCPATH . 'css/style.css'), 0, 12) ?>">
+    <link rel="stylesheet" href="<?= base_url('css/vivid.css') ?>?v=<?= substr(md5_file(FCPATH . 'css/vivid.css'), 0, 12) ?>">
 </head>
 <body>
     <a class="skip-link" href="#content">Skip to content</a>
-    <canvas class="ambient-particles" id="ambient-particles" aria-hidden="true"></canvas>
+
     <header class="site-header">
         <div class="container nav-wrap">
             <a class="brand" href="<?= site_url('/') ?>" aria-label="SimplePOS overview"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>simple<span class="brand-accent">pos</span><small>STORE WORKSPACE</small></span></a>

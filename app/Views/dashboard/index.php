@@ -1,23 +1,9 @@
 <?= view('partials/header', ['title' => $title]) ?>
-<section class="dashboard-hero rise-in">
-    <div class="hero-copy">
-        <p class="eyebrow light">YOUR STORE <span class="eyebrow-line"></span> AT A GLANCE</p>
-        <h1>Make every<br><em>day count.</em></h1>
-        <p>A clear view of the products on your shelves and the sales through your counter.</p>
-        <div class="actions"><a class="button button-light" href="<?= site_url('sales/new') ?>">Record a sale <span aria-hidden="true">↗</span></a><a class="button button-outline-light" href="<?= site_url('products') ?>">View inventory</a></div>
-    </div>
-    <div class="hero-stage">
-        <div class="hero-photo hero-photo-main"><img src="<?= base_url('uploads/products/catalog-ceramic-mug.jpg') ?>" alt="White ceramic coffee mug on a light surface"></div>
-        <div class="hero-photo hero-photo-side"><img src="<?= base_url('uploads/products/catalog-notebook.jpg') ?>" alt="Open notebook with pen"></div>
-        <div class="receipt-preview" aria-label="Recent sales summary">
-        <div class="receipt-top"><span>SALES LEDGER</span><span>LIVE</span></div>
-        <strong><?= number_format($saleCount) ?></strong><span class="receipt-caption">transactions recorded</span>
-        <div class="receipt-rule"></div>
-        <div class="receipt-total"><span>Total sales</span><b>₱<?= number_format((float) $salesTotal, 2) ?></b></div>
-        <div class="receipt-bottom">SIMPLEPOS / STORE OPERATIONS</div>
-        </div>
-    </div>
-</section>
+<section class="dashboard-hero rise-in" data-parallax-hero>
+<img class="dashboard-hero-image" src="<?= base_url('images/forest-island.png') ?>" alt="A floating moss-covered island in soft daylight" fetchpriority="high">
+<div class="hero-copy"><p class="eyebrow light">SIMPLEPOS / YOUR STORE, IN BALANCE</p><h1>Every day,<br><em>well run.</em></h1><p>A clear view of your products, your people, and every sale through the counter.</p><div class="actions"><a class="button button-light" href="<?= site_url('sales/new') ?>">Record a sale ↗</a><a class="button button-outline-light" href="<?= site_url('products') ?>">Explore inventory</a></div></div>
+<a class="hero-index" href="#at-a-glance"><span>EXPLORE YOUR WORKSPACE</span><i></i><span aria-hidden="true">↓</span></a>
+<div class="receipt-preview" aria-label="Sales summary"><div class="receipt-top"><span>SALES LEDGER</span><span>LIVE</span></div><strong><?= number_format($saleCount) ?></strong><span class="receipt-caption">transactions recorded</span><div class="receipt-rule"></div><div class="receipt-total"><span>Total sales</span><b>₱<?= number_format((float) $salesTotal, 2) ?></b></div><div class="receipt-bottom">SIMPLEPOS / STORE OPERATIONS</div></div></section>
 <section class="section-block rise-in" aria-labelledby="at-a-glance">
     <div class="section-heading"><div><p class="eyebrow">AT A GLANCE</p><h2 id="at-a-glance">Your store today</h2></div><p>Current inventory and recorded sales.</p></div>
     <div class="metric-grid">
