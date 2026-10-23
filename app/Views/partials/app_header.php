@@ -14,6 +14,7 @@ $isActive = static fn (string $route): string => $path === $route ? ' aria-curre
 <link rel="stylesheet" href="<?= base_url('css/tasks-nature.css') ?>?v=<?= substr(md5_file(FCPATH . 'css/tasks-nature.css'), 0, 12) ?>">
 </head>
 <body>
+<div class="scene-backdrop" aria-hidden="true"><img src="<?= base_url('images/forest-island.png') ?>" alt="" fetchpriority="high"><span class="scene-orbit"></span><i class="scene-leaf" style="--leaf-x:7%;--leaf-size:21px;--leaf-time:13s;--leaf-delay:-2s"></i><i class="scene-leaf" style="--leaf-x:20%;--leaf-size:14px;--leaf-time:17s;--leaf-delay:-12s"></i><i class="scene-leaf" style="--leaf-x:34%;--leaf-size:25px;--leaf-time:16s;--leaf-delay:-6s"></i><i class="scene-leaf" style="--leaf-x:48%;--leaf-size:12px;--leaf-time:12s;--leaf-delay:-8s"></i><i class="scene-leaf" style="--leaf-x:63%;--leaf-size:23px;--leaf-time:18s;--leaf-delay:-15s"></i><i class="scene-leaf" style="--leaf-x:76%;--leaf-size:18px;--leaf-time:14s;--leaf-delay:-5s"></i><i class="scene-leaf" style="--leaf-x:89%;--leaf-size:29px;--leaf-time:19s;--leaf-delay:-9s"></i><i class="scene-leaf" style="--leaf-x:96%;--leaf-size:13px;--leaf-time:15s;--leaf-delay:-12s"></i></div>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
         <div class="container nav-wrap">

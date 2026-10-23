@@ -10,7 +10,8 @@
     const stopped = paused || preference.matches;
     root.classList.toggle('motion-paused', stopped);
     controls.forEach(button => {
-      button.textContent = stopped ? 'Motion paused' : 'Pause motion';
+      button.textContent = preference.matches ? 'Reduced motion' : stopped ? 'Play animation' : 'Pause animation';
+      button.title = preference.matches ? 'Animation follows your device reduced motion setting.' : stopped ? 'Resume the moving background and floating leaves.' : 'Pause the moving background and floating leaves.';
       button.setAttribute('aria-pressed', String(stopped));
       button.disabled = preference.matches;
     });
